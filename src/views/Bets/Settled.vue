@@ -3,7 +3,7 @@
         <div class="center-body">
             <div class="center-content">
                 <div class="center-game_list betlist">
-                    <div class="card bg-transparent rounded-0 border-0 rounded-0">
+                    <div class="card bg-transparent rounded-0 border-0 rounded-0" v-if="!loading && !error">
                         <div class="card-header text-start py-2">
                             <h3>Bet History</h3>
                         </div>
@@ -41,6 +41,13 @@
                             <p class="text-white">No data available</p>
                         </div>
                     </div>
+                    <div class="card bg-transparent rounded-0 border-0 py-5 my-5" v-if="error">
+                        <h5>{{ error }}</h5>
+                        <p>You had a connection issue. Pleasae try again</p>
+                        <div class="col-md-6 mx-auto text-center">
+                            <button @click="reloadPage" class="btn btn-sm btn-secondary rounded-0">Reload Page</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -53,6 +60,8 @@
         data() {
             return {
                 details: [],
+                loading: false,
+                error: null
             };
         },
         methods: {
@@ -66,7 +75,7 @@
                     })
                     .catch((error) => {
                         this.loading = false;
-                        console.log(error);
+                        this.error = error.message
                     });
                 
             },

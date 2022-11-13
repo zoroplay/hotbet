@@ -1,7 +1,7 @@
 <template>
   <div class="center-body">
-    <div class="center-content">
-      <div class="top-image" v-if="!isLoggedIn">
+    <div class="center-content" v-if="!error && !loading">
+      <div class="top-image">
         <img src="@/assets/op.png" class="img-fluid" alt="">
       </div>
       <div class="container">
@@ -15,7 +15,8 @@
       <mobile-mini></mobile-mini>
       <!-- Live -->
       <live :limit="5"></live>
-      <div class="text-center my-3">
+      <!-- <live-fixtures></live-fixtures> -->
+      <div class="text-center my-3 d-none">
         <router-link to="/Live" class="text-white text-decoration-none btn btn-secondary btn-sm rounded-0">More Live Now <i class="bi bi-arrow-right"></i></router-link>
       </div>
       <!-- Live -->
@@ -32,6 +33,13 @@
         </div>
       </div>
     </div>
+    <div class="card bg-transparent rounded-0 border-0 py-5 my-5" v-if="error">
+          <h5>{{ error }}</h5>
+          <p>You had a connection issue. Pleasae try again</p>
+          <div class="col-md-6 mx-auto text-center">
+              <button @click="reloadPage" class="btn btn-sm btn-secondary rounded-0">Reload Page</button>
+          </div>
+      </div>
   </div>
 </template>
 
@@ -41,6 +49,7 @@ import Fixtures from '../components/Fixtures.vue';
 // import HelloWorld from "@/components/HelloWorld.vue";
 import axios from "@/services/api"
 import MobileMini from '../components/mobile-mini.vue';
+// import LiveFixtures from '../components/LiveFixtures.vue';
 import Live from './Live.vue';
 export default {
   components: { Fixtures, MobileMini, Live },
@@ -52,6 +61,7 @@ export default {
       tournaments: [],
       live: this.$store.state.live,
       loading: false,
+      error: null
     }
   },
   computed: {
@@ -90,6 +100,8 @@ export default {
           })
           .catch(err => {
             console.log(err);
+            this.loading = false;
+            this.error = err.message
           });
       }, 500);
     }

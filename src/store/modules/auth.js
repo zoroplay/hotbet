@@ -35,6 +35,7 @@ const mutations = {
   },
   logout(state, user) {
     state.user = user;
+    state.access_token = user;
   },
   setToken(state, payload) {
     state.access_token = payload

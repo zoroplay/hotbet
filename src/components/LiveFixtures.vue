@@ -5,17 +5,14 @@
     v-for="(fixture, index) in fixtures"
     :key="index"
     >
-        <router-link :to="{ name: 'match', params: { event_id: fixture.provider_id === undefined ? 0 : fixture.provider_id, name: toURL(fixture.event_name), status: live ? 'live' : 'prematch' }}" class="text-dark text-decoration-none" style="text-decoration: none;">
-            <div v-if="!live" class="d-flex justify-content-start fixture_time_date">
-                <span class="pe-2 text-white-50">{{ fixture.event_time }} </span> <span class="fw-bold text-white-50"> {{ formatDate(fixture.event_date) }}</span>
-            </div>
-            <div v-else class="d-flex justify-content-start fixture_time_date">
-                <span class="pe-2 text-danger" v-if="live && fixture.live_data">Live {{ fixture.live_data.match_time ?? '' }}' </span> <span class="fw-bold"> </span>
+        <router-link :to="{ name: 'match', params: { event_id: fixture.provider_id, name: toURL(fixture.event_name), status: 'live' }}" class="text-dark text-decoration-none" style="text-decoration: none;">
+            <div class="d-flex justify-content-start fixture_time_date">
+                <span class="pe-2 text-danger">Live {{ fixture.live_data.match_time ?? '' }}' </span> <span class="fw-bold"> </span>
             </div>
             <div class="d-flex flex-column">
                 <div class="d-flex justify-content-between">
                     <span class="team text-white">{{ fixture.team_a }}</span>
-                    <span v-if="live" class="text-warning fw-bolder">{{ getHomeScore(fixture.score) }}</span>
+                    <span class="text-warning fw-bolder">{{ getHomeScore(fixture.score) }}</span>
                 </div>
                 <div class="d-flex justify-content-between">
                   <span class="team text-white">{{ fixture.team_b }}</span>
@@ -25,30 +22,35 @@
                 <span>{{ fixture.sport_name }}</span>/ <span> {{ fixture.sport_tournament_name }} </span>
                 </div>
             </div>
+            <div v-if="fixture.live_data.match_time" class="bets">
+                <live-odds
 
-            <div class="bets" v-if="!live">
-                <odds
-                    v-for="(o, index) in fixture.odds"
+                    :data="sortFixture(fixture)[0].odds"
                     :key="index"
                     :odds="o.odds"
                     :name="o.name"
                     :status="o.active"
-                ></odds>
-                <div v-if="!live" class="bets-markets">
-                    <a class="text-decoration-none">+{{ fixture.markets_count }}</a>
+                ></live-odds>
+                <div class="bets-markets d-none">
+                    <a class="text-decoration-none">+{{ fixture.live_data?.markets.length }}</a>
                 </div>
             </div>
-            <div class="bets" v-if="live && fixture.live_data?.match_status">
-                <odds
-                    v-for="(o, index) in sortFixture(fixture)[0].odds"
-                    :key="index"
-                    :odds="o.odds"
-                    :name="o.name"
-                    :status="o.active"
-                    :live="live"
-                ></odds>
-                <div class="bets-markets d-none">
-                    <a class="text-decoration-none">+{{ fixture.live_data.markets.length }}</a>
+
+            <div class="d-flex" v-else>
+                <div class="bet">
+                    <span class="event_odds">
+                    <i class="bi bi-lock text-white-50"></i>
+                    </span>
+                </div>
+                <div class="bet">
+                    <span class="event_odds">
+                    <i class="bi bi-lock text-white-50"></i>
+                    </span>
+                </div>
+                <div class="bet">
+                    <span class="event_odds">
+                    <i class="bi bi-lock text-white-50"></i>
+                    </span>
                 </div>
             </div>
         </router-link>
@@ -57,11 +59,11 @@
 </template>
 
 <script>
-import Odds from './Odds.vue';
+import LiveOdds from './LiveOdds'
 import moment from 'moment';
 export default {
-  components: { Odds },
-  props: ["fixtures","live"],
+  components: { LiveOdds },
+  props: ["fixtures"],
   methods:{
     toURL(name) {
         if (name === undefined) {
@@ -88,7 +90,9 @@ export default {
     sortFixture(fixture){
       // let fixtures = []
       // return this.fixtures.filter((x) => x.sport_id == sport_id);
-      return this.sort(fixture.live_data.markets).slice(0,1);
+      if(Array.isArray(fixture.live_data)){
+          return this.sort(fixture.live_data.markets).slice(0,1);
+      }
     },
   }
 };

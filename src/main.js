@@ -24,6 +24,9 @@ Vue.mixin({
     formatBalance(number){
       const n = number ? number : 0;
       return "" + parseFloat(n).toLocaleString();
+    },
+    reloadPage(){
+      window.location.reload();
     }
   }
 })
