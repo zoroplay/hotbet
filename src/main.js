@@ -24,7 +24,7 @@ Vue.mixin({
     },
     formatBalance(number){
       const n = number ? number : 0;
-      return "" + parseFloat(n).toLocaleString();
+      return "KSH " + parseFloat(n).toLocaleString();
     },
     reloadPage(){
       window.location.reload();
@@ -33,6 +33,16 @@ Vue.mixin({
       axios.get('sports/get-menu?period=all&start=null&end=null').then((res)=>{
         this.$store.dispatch('setCommitMenu', res.data.menu)
       })
+    },
+    liveScore(score, team){
+      if (score) {
+        const scoreArray = score.split(':');
+        if(team === 'home') {
+            return "0" + scoreArray[0];
+        } else {
+            return "0" + scoreArray[1];
+        }
+      }
     }
   }
 })

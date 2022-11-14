@@ -14,13 +14,14 @@
                     <router-link class="me-3 fw-bolder small text-white text-decoration-none" to="/Casino">CASINO</router-link>
                 </div>
                 <div v-if="isLoggedIn" class="dropdown d-lg-none">
-                    <button type="button" class="btn bg-transparent dropdown-toggle py-0 text-white text-uppercase fw-bold small" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i> menu</button>
+                    <button type="button" class="btn bg-transparent dropdown-toggle py-0 text-white text-uppercase fw-bold small border-0" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i> menu</button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><router-link class="dropdown-item" to="#">Messages</router-link></li>
-                        <li><router-link class="dropdown-item" to="#">My Bets</router-link></li>
-                        <li><router-link class="dropdown-item" to="#">Deposit</router-link></li>
-                        <li><router-link class="dropdown-item" to="#">Withdraw</router-link></li>
-                        <li><router-link class="dropdown-item" to="#">Change Password</router-link></li>
+                        <li><router-link class="dropdown-item py-2 border-bottom" to="/Messages">Messages</router-link></li>
+                        <li><router-link class="dropdown-item py-2 border-bottom" to="/bets">My Bets</router-link></li>
+                        <li><router-link class="dropdown-item py-2 border-bottom" to="/deposit">Deposit</router-link></li>
+                        <li><router-link class="dropdown-item py-2 border-bottom" to="/transactions">Transactions</router-link></li>
+                        <li><router-link class="dropdown-item py-2 border-bottom" to="/withdraw">Withdraw</router-link></li>
+                        <li><router-link class="dropdown-item py-2 border-bottom" to="/account">Change Password</router-link></li>
                         <li><a class="dropdown-item" style="cursor: pointer" @click="logout">Log Out</a></li>
                     </ul>
                 </div>
@@ -81,7 +82,7 @@
             </div>
         </div>
         
-        <mobile-menu :tournaments="tournaments"></mobile-menu>
+        <mobile-menu :tournaments="tournaments" :sports="sports"></mobile-menu>
     </div>
 </template>
 
@@ -89,7 +90,7 @@
 import MobileMenu from './MobileMenu.vue';
 export default {
     components: {MobileMenu},
-    props: ['tournaments'],
+    props: ['tournaments','sports'],
     data(){
         return {}
     },

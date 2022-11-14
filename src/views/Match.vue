@@ -2,19 +2,17 @@
     <div>
         <div class="center-body">
             <div class="center-content">
-                <div class="center-game_list">
+                <div class="center-game_list" v-if="!loading && details">
                     <div class="card bg-transparent rounded-0 border-0 rounded-0">
-                    <div class="card-header text-start page_headline py-3">
+                    <div class="card-header page_headline py-3" :class="live ? 'text-center' : 'text-start' ">
+                        <div v-if="live" class="justify-content-center score d-flex align-items-center text-warning"> {{ liveScore(details?.score, 'home') }} <span class="time">{{ details.live_data?.match_time !== 0 && details.live_data?.match_time }}<span className="timeFlash">'</span></span> {{ liveScore(details?.score, 'away') }} </div>
                         <div v-if="!live" class="d-flex justify-content-start fixture_time_date">
                             <span class="pe-2">{{ details.event_time }} </span>
                             <span class="fw-bold"> {{ formatDate(details.event_date) }}</span>
                         </div>
                         <div class="d-flex flex-column">
-                            <div class="d-flex justify-content-between">
-                                <h1 class="team">{{ details.team_a }} - {{ details.team_b }}</h1>
-                                <span v-if="live">{{ details.score }}</span>
-                            </div>
-                            <div class="sport_tournament text-muted">
+                            <h1 class="team" :class="live ? 'text-center' : '' ">{{ details.team_a }} - {{ details.team_b }}</h1>
+                            <div class="sport_tournament text-muted" :class="live ? 'text-center' : '' ">
                                 <p class="mb-0"> {{ details.sport_tournament_name }} - {{ details.sport_category_name }} - {{ details.sport_name }} </p>
                             </div>
                         </div>
@@ -61,7 +59,7 @@
                         </div>
                     </div>
                     <div v-if="live">
-                        <div v-for="(i, o) in details.live_data.markets" :key="o">
+                        <div v-for="(i, o) in details.live_data?.markets" :key="o">
                             <div class="card-body text-start" v-if="i.active == '1'">
                                 <h6 class="fw-bolder">{{ i.name }}  <span v-if="i.type_id == '5'">O/U {{ i.specialOddsValue }}</span></h6>
                                 <div >
@@ -90,6 +88,9 @@
                     <fixtures :fixtures="fixtures" v-if="!loading && fixtures.length"></fixtures> -->
                     </div>
                 </div>
+                <div v-if="loading" class="loading mt-5 text-center">
+                    <img src="@/assets/loading.gif" style="height: 40px" alt="" srcset="">
+                </div>
             </div>
         </div>
     </div>
@@ -98,10 +99,12 @@
 <script>
     import axios from "@/services/api";
     export default {
+        name: "match",
         data() {
             return {
                 event_id: "",
-                details: [],
+                details: {},
+                loading: false,
             };
         },
         watch: {
@@ -125,6 +128,7 @@
                         this.details = res.data.data;
                         var live_data = JSON.parse(res.data.data.live_data);
                         this.details.live_data = live_data;
+                        this.loading = false;
                         console.log('====')
                         console.log(this.details);
                     })
@@ -145,6 +149,13 @@
                         });
                 }
             },
+            formatScore(score){
+                if(parseInt(score) < 10){
+                    return "0"+score;
+                }else{
+                    return score;
+                }
+            }
         },
     };
 </script>
@@ -180,13 +191,26 @@
     width: calc(33.33333% - 8px)
 }
 
+.score{
+    font-size: 30px;
+    font-weight: 800;
+}
 
+.score span.time{
+    font-weight: 400;
+    font-size: 13px;
+    padding: 1px 15px;
+    margin: 0 15px;
+    background-color: #1c1e24;
+}
 
-/* .bets:not(.bets-2):not(.bets-3) {
-    -webkit-flex-wrap: nowrap;
-    flex-wrap: nowrap
-} */
-
-
+.time span.timeFlash {
+  animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+  50% {
+    opacity: 0;
+  }
+}
 
 </style>

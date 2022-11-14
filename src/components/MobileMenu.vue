@@ -6,9 +6,7 @@
                 <div class="mb-1">
                     <select class="form-select rounded-0" name="" id="">
                         <option selected>Select one</option>
-                        <option value="">New Delhi</option>
-                        <option value="">Istanbul</option>
-                        <option value="">Jakarta</option>
+                        <option value="" v-for="(sport, index) in sports" :key="index">{{ sport.name }}</option>
                     </select>
                 </div>
             </div>
@@ -24,7 +22,7 @@
             </div>
             <div class="left-bottom">
                 <div class="accordion accordion-flush border-0" id="accordionFlushExample">
-                    <div class="accordion-item">
+                    <div class="accordion-item" style="border-bottom: 1px solid rgba(235, 238, 241,.125) !important; backgorund-color: #16202c !important">
                         <h2 class="accordion-header" id="flush-headingOne">
                             <button class="accordion-button collapsed fw-bold text-uppercase border-0" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#flush-collapseOne" aria-expanded="false"
@@ -51,9 +49,9 @@
                         </h2>
                         <div id="flush-collapseTwo" class="accordion-collapse collapse"
                             aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">
+                            <div class="accordion-body px-1">
                                 <ul class="list-group list-group-flush rounded-0 text-start">
-                                    <li v-for="(tournament, index) in tournaments" :key="index" class="list-group-item">{{ tournament.tournament.category.name }}</li>
+                                    <li v-for="(sport, index) in sports[0].categories" :key="index" class="list-group-item">{{ sport.name }}</li>
                                 </ul>
                             </div>
                         </div>
@@ -85,7 +83,7 @@
 <script>
 export default {
     name: "mobile-nav",
-    props: ['tournaments']
+    props: ['tournaments', 'sports']
 };
 </script>
 
@@ -124,11 +122,16 @@ export default {
         color: #04a7f8;
     }
 
+    .accordion.accordion-item:first-of-type {
+        border-bottom-color: rgba(235, 238, 241,.125) !important; 
+    }
+
     .accordion.accordion-flush .accordion-item .accordion-button{
         background-color: #16202c;
         color: white;
     }
-    .accordion{
-                border-color: rgba(235, 238, 241,.125);
+    .accordion, .accordion-body, .accordion-item{
+        border-color: rgba(235, 238, 241,.125) !important;
+        background-color: #16202c !important;
     }
 </style>

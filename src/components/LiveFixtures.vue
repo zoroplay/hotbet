@@ -1,5 +1,5 @@
 <template>
-  <div class="fixture">
+  <div :class="this.$route.path === '/' ? 'home-live' : ''" class="fixture">
     <div
     class="card-body text-start "
     v-for="(fixture, index) in fixtures"
@@ -12,11 +12,11 @@
             <div class="d-flex flex-column">
                 <div class="d-flex justify-content-between">
                     <span class="team text-white">{{ fixture.team_a }}</span>
-                    <span class="text-warning fw-bolder">{{ getHomeScore(fixture.score) }}</span>
+                    <span class="text-warning fw-bolder">{{ getScore(fixture?.score, 'home') }}</span>
                 </div>
                 <div class="d-flex justify-content-between">
                   <span class="team text-white">{{ fixture.team_b }}</span>
-                  <!-- <span v-if="live" class="text-warning fw-bolder">{{ getAwayScore(fixture.score) }}</span> -->
+                  <span class="text-warning fw-bolder">{{ getScore(fixture?.score, 'away') }}</span>
                 </div>
                 <div class="sport_tournament text-muted">
                 <span>{{ fixture.sport_name }}</span>/ <span> {{ fixture.sport_tournament_name }} </span>
@@ -54,6 +54,9 @@
             </div>
         </router-link>
     </div>
+    <div v-show="this.$route.path === '/'" class="text-center my-3">
+      <router-link to="/Live" class="text-white text-decoration-none btn btn-secondary btn-sm rounded-0">More Live Now <i class="bi bi-arrow-right"></i></router-link>
+    </div>
   </div>
 </template>
 
@@ -63,6 +66,11 @@ import moment from 'moment';
 export default {
   components: { LiveOdds },
   props: ["fixtures"],
+  data(){
+    return {
+      showMore: true,
+    }
+  },
   methods:{
     toURL(name) {
         if (name === undefined) {
@@ -73,13 +81,16 @@ export default {
     formatDate(date){
         return moment(date).format('ddd DD/MM')
     },
-    getHomeScore(score){
-      return score
+    getScore(score, team){
+      if (score) {
+        const scoreArray = score.split(':');
+        if(team === 'home') {
+            return scoreArray[0];
+        } else {
+            return scoreArray[1];
+        }
+      }
     },
-    getAwayScore(score){
-      return score
-    },
-    
     sort: function(arr) {
       // let odds = arr.live_data.markets;
       return arr.slice().sort(function(a, b) {
@@ -98,6 +109,10 @@ export default {
 <style>
 .fixture>.card-body{
   border-bottom: .5px solid rgba(235, 238, 241,.125);
+}
+
+.fixture.home-live{
+  background-color: #1c1e24;
 }
 .team {
   font-size: 18px;

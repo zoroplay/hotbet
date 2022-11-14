@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="header">
-      <navbar></navbar>
+      <navbar :sports="sports" :tournaments="tournaments" ></navbar>
     </div>
     <div class="view-wrapper">
       <div class="view-content">
@@ -29,6 +29,11 @@ export default {
   data(){
     return {
       tournaments: [],
+    }
+  },
+  computed:{
+    sports(){
+      return this.$store.state.sports;
     }
   },
   methods:{

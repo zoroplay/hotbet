@@ -1,6 +1,6 @@
 <template>
   <div class="py-3">
-    <div class="container">
+    <div class="container-md container-lg">
       <div class="row gx-2">
         <div class="col-3">
           <router-link class="text-decoration-none text-white" to="/">

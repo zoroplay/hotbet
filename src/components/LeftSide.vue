@@ -21,7 +21,7 @@
                 </ul>
             </div>
             <div class="left-bottom">
-                <div class="accordion accordion-flush" id="accordionFlushExample">
+                <div class="accordion accordion-flush rounded-0" id="accordionFlushExample">
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="flush-headingOne">
                             <button class="accordion-button collapsed fw-bold text-uppercase" type="button" data-bs-toggle="collapse"
