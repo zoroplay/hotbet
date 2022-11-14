@@ -4,7 +4,7 @@
       <div class="top-image">
         <img src="@/assets/banner.png" class="img-fluid" alt="">
       </div>
-      <div class="container mt-3">
+      <div class="container-lg mt-3">
         <div class="card page-headline" v-if="user && user.balance < 100">
           <div class="card-body text-start">
             <h4>Deposit Funds</h4>

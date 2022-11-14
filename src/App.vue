@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="header">
-      <navbar :sports="sports" :tournaments="tournaments" ></navbar>
+      <navbar :sports="sports" :tournaments="tournaments"></navbar>
     </div>
     <div class="view-wrapper">
       <div class="view-content">
@@ -18,35 +18,35 @@
 </template>
 
 <script>
-import axios from "@/services/api"
-import Navbar from './components/Navbar.vue'
-import LeftSide from './components/LeftSide.vue'
-import RightSide from './components/RightSide.vue'
+import axios from "@/services/api";
+import Navbar from "./components/Navbar.vue";
+import LeftSide from "./components/LeftSide.vue";
+import RightSide from "./components/RightSide.vue";
 
 export default {
   components: { Navbar, LeftSide, RightSide },
   name: "app",
-  data(){
+  data() {
     return {
       tournaments: [],
-    }
+    };
   },
-  computed:{
-    sports(){
+  computed: {
+    sports() {
       return this.$store.state.sports;
-    }
+    },
   },
-  methods:{
-    getTournaments(){
-      axios.get('/sports/topbets').then((res)=> {
-        this.tournaments = res.data.topbets
-      })
-    }
+  methods: {
+    getTournaments() {
+      axios.get("/sports/topbets").then((res) => {
+        this.tournaments = res.data.topbets;
+      });
+    },
   },
-  mounted(){
-    this.getTournaments()
-  }
-}
+  mounted() {
+    this.getTournaments();
+  },
+};
 </script>
 
 <style lang="scss">
@@ -63,12 +63,12 @@ export default {
   height: 100vh;
 }
 
-.view-wrapper > .view-content > .row{
-  overflow:hidden ;
+.view-wrapper > .view-content > .row {
+  overflow: hidden;
   height: calc(100vh - 73px);
 }
 
-.center{
+.center {
   width: calc(100% - 53%);
   margin: 0 30% 0 22%;
   overflow-y: auto;
@@ -76,7 +76,7 @@ export default {
 }
 
 @media screen and (max-width: 600px) {
-  .center{
+  .center {
     width: 100%;
     margin: 0;
     overflow: auto;
@@ -84,10 +84,9 @@ export default {
   }
 }
 
-
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
-  .center{
+  .center {
     width: 100%;
     margin: 0;
     overflow: auto;
@@ -96,7 +95,7 @@ export default {
 }
 /* Medium devices (landscape tablets, 768px and up) */
 @media only screen and (min-width: 768px) {
-  .center{
+  .center {
     width: 100%;
     margin: 0;
     overflow: auto;
@@ -105,7 +104,7 @@ export default {
 }
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
-  .center{
+  .center {
     width: calc(100% - 49%);
     margin: 0 28% 0 21%;
     overflow-y: auto;
@@ -114,25 +113,25 @@ export default {
 }
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
-  .center{
+  .center {
     width: calc(100% - 53%);
     margin: 0 30% 0 22%;
     overflow-y: auto;
     height: calc(100vh - 73px);
   }
 }
-.card-header.page_headline{
+.card-header.page_headline {
   background-color: #23313d;
   color: #fff;
   border-radius: 0;
 }
 
-.txt-primary{
-  color: #04a7f8
+.txt-primary {
+  color: #ee3135;
 }
 
-.bg-prim{
-  background-color: #04a7f8;
+.bg-prim {
+  background-color: #ee3135;
   color: white;
 }
 

@@ -14,7 +14,7 @@
                     <router-link class="me-3 fw-bolder small text-white text-decoration-none" to="/Casino">CASINO</router-link>
                 </div>
                 <div v-if="isLoggedIn" class="dropdown d-lg-none">
-                    <button type="button" class="btn bg-transparent dropdown-toggle py-0 text-white text-uppercase fw-bold small border-0" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i> menu</button>
+                    <button type="button" class="btn d-lg-none bg-transparent dropdown-toggle py-0 text-white text-uppercase fw-bold small border-0" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i> menu</button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><router-link class="dropdown-item py-2 border-bottom" to="/Messages">Messages</router-link></li>
                         <li><router-link class="dropdown-item py-2 border-bottom" to="/bets">My Bets</router-link></li>
@@ -39,14 +39,14 @@
             </div>
         </div>
         <div class="main d-flex justify-content-between align-items-center px-3 py-3 bg-transparent">
-            <router-link to="" class="navbar-brand">
-                <img src="@/assets/logo.png" class="img-fluid" style="height: 30px" alt="" />
+            <router-link to="/" class="navbar-brand">
+                <img src="@/assets/logo1.png" class="img-fluid" style="height: 30px" alt="" />
             </router-link>
             <div class="input-group d-none w-30">
                 <input type="text" class="form-control border-0" placeholder="Recipient's username"
                     aria-label="Recipient's username" aria-describedby="basic-addon2" />
                 <span class="input-group-text rounded-0 bg-white border-0" id="basic-addon2"><i class="bi bi-search"></i></span>
-            </div>
+            </div> 
                 <!-- <span v-if="isLoggedIn">
                 <router-link @click="logout">Logout</router-link>
                 </span> -->
@@ -66,7 +66,7 @@
             <div v-if="isLoggedIn" class="btn-group" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-sm disabled border-0 bg-transparent text-white text-uppercase fw-bold">{{ formatBalance(user.balance) }}</button>
                 <router-link to="/Deposit" type="button" class="btn btn-success btn-sm text-uppercase fw-bold">DEPOSIT</router-link>
-                <div class="dropdown d-none d-lg-block d-md-block">
+                <div class="dropdown d-none d-lg-block">
                     <button type="button" class="btn bg-transparent dropdown-toggle text-white text-uppercase fw-bold" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i> menu</button>
                     <ul class="dropdown-menu rounded-0" aria-labelledby="dropdownMenuButton1">
                         <li><router-link class="dropdown-item py-2 border-bottom" to="/Messages">Messages</router-link></li>
