@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="center-body">
+        <div class="center-body" v-if="!loading">
             <div class="center-content">
                 <div class="center-game_list betlist">
                     <div class="card bg-transparent rounded-0 border-0 rounded-0" v-if="!error && !loading">
@@ -48,6 +48,9 @@
                 </div>
             </div>
         </div>
+        <div v-if="loading" class="loading mt-5 text-center">
+            <img src="@/assets/loading.gif" style="height: 40px" alt="" srcset="">
+        </div>
     </div>
 </template>
 
@@ -58,7 +61,7 @@
         data() {
             return {
                 details: [],
-
+                loading: false,
                 error: null
             };
         },

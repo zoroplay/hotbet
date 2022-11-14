@@ -2,22 +2,21 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Live from "../views/Live.vue";
-import Upcoming from "../views/Upcoming"
-import Match from "../views/Match"
+import Upcoming from "../views/Upcoming";
+import Match from "../views/Match";
 
-import Login from "../views/Login"
-import Register from "../views/Register"
+import Login from "../views/Login";
+import Register from "../views/Register";
 
-import Casino from "../views/Casino"
-import Virtual from "../views/Virtual"
+import Casino from "../views/Casino";
+import Virtual from "../views/Virtual";
 
-import ChangePassword from "../views/ChangePassword"
-import Deposit from "../views/Deposit"
-import Withdraw from "../views/Withdraw"
-import Transactions from "../views/Transactions"
+import ChangePassword from "../views/ChangePassword";
+import Deposit from "../views/Deposit";
+import Withdraw from "../views/Withdraw";
+import Transactions from "../views/Transactions";
 
-import Messages from "../views/Messages"
-
+import Messages from "../views/Messages";
 
 Vue.use(VueRouter);
 
@@ -25,66 +24,115 @@ const routes = [
   {
     path: "/",
     name: "Home",
-    component: Home
+    component: Home,
+    meta: {
+      title:
+        "Capital Bet",
+      metaTags: [
+        {
+          name: "title",
+          content:
+            "Capital Bet",
+        },
+        {
+          name: "description",
+          content:
+            "Spotika is most secured and trusted online casino in Kenya. Sign On Bonus to Play your favorite casino games online. Register with Spotika and start the fun today.",
+        },
+        {
+          name: "keywords",
+          content:
+            "Betting Site with Highest Odds in Kenya, Betting App in Kenya.",
+        },
+        {
+          property: "og:description",
+          content:
+            "Spotika | Get the Highest ODDS in Kenya, Fastest Live Betting, Easiest Jackpots & Instant Payouts",
+        },
+        {
+          property: "twitter:description",
+          content:
+            "Spotika | Get the Highest ODDS in Kenya, Fastest Live Betting, Easiest Jackpots & Instant Payouts",
+        },
+        {
+          property: "twitter:title",
+          content:
+            "Spotika | Get the Highest ODDS in Kenya, Fastest Live Betting, Easiest Jackpots & Instant Payouts",
+        },
+        {
+          property: "og:title",
+          content:
+            "Spotika | Get the Highest ODDS in Kenya, Fastest Live Betting, Easiest Jackpots & Instant Payouts",
+        },
+        {
+          property: "og:url",
+          content: "spotika.co.ke",
+        },
+        {
+          property: "og:type",
+          content: "Website",
+        },
+      ],
+    },
   },
   {
     path: "/live",
     name: "Live",
-    component: Live
+    component: Live,
   },
   {
     path: "/upcoming",
     name: "Upcoming",
-    component: Upcoming
+    component: Upcoming,
   },
   {
-    path: '/sport/:status/:event_id/:name',
-    name: 'match',
+    path: "/sport/:status/:event_id/:name",
+    name: "match",
     component: Match,
   },
   {
-    path: '/login',
-    name: 'Login',
+    path: "/login",
+    name: "Login",
     component: Login,
   },
   {
-    path: '/register',
-    name: 'register',
+    path: "/register",
+    name: "register",
     component: Register,
   },
   {
-    path: '/casino',
-    name: 'casino',
+    path: "/casino",
+    name: "casino",
     component: Casino,
   },
   {
-    path: '/virtual',
-    name: 'virtual',
+    path: "/virtual",
+    name: "virtual",
     component: Virtual,
   },
   {
-    path: '/account',
-    name: 'account',
+    path: "/account",
+    name: "account",
     component: ChangePassword,
   },
   {
-    path: '/deposit',
-    name: 'deposit',
+    path: "/deposit",
+    name: "deposit",
     component: Deposit,
   },
   {
-    path: '/withdraw',
-    name: 'withdraw',
+    path: "/withdraw",
+    name: "withdraw",
     component: Withdraw,
   },
   {
-    path: '/transactions',
-    name: 'transactions',
+    path: "/transactions",
+    name: "transactions",
     component: Transactions,
   },
   {
-    path: '/messages',
-    name: 'messages',
+    path: "/messages",
+    name: "messages",
     component: Messages,
   },
   {
@@ -94,25 +142,25 @@ const routes = [
     children: [
       {
         path: "open",
-        component: () => import("../views/Bets/Open")
+        component: () => import("../views/Bets/Open"),
       },
       {
         path: "settled",
-        component: () => import("../views/Bets/Settled")
+        component: () => import("../views/Bets/Settled"),
       },
       {
         path: "virtuals",
-        component: () => import("../views/Bets/Virtuals")
+        component: () => import("../views/Bets/Virtuals"),
       },
       {
         path: "jackpots",
-        component: () => import("../views/Bets/Jackpots")
-      },    
-    ]
+        component: () => import("../views/Bets/Jackpots"),
+      },
+    ],
   },
   {
-    path: '/betlist/:id',
-    name: 'bet-info',
+    path: "/betlist/:id",
+    name: "bet-info",
     component: () => import("../views/Bets/bet-info"),
   },
   {
@@ -122,14 +170,14 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue")
-  }
+      import(/* webpackChunkName: "about" */ "../views/About.vue"),
+  },
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes
+  routes,
 });
 
 export default router;

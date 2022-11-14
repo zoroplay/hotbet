@@ -72,5 +72,4 @@ export default {
   white-space: nowrap;
   padding: 10px;
 }
-
 </style>

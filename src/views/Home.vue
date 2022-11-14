@@ -2,9 +2,9 @@
   <div class="center-body">
     <div class="center-content" v-if="!error && !loading">
       <div class="top-image">
-        <img src="@/assets/op.png" class="img-fluid" alt="">
+        <img src="@/assets/banner.png" class="img-fluid" alt="">
       </div>
-      <div class="container">
+      <div class="container mt-3">
         <div class="card page-headline" v-if="user && user.balance < 100">
           <div class="card-body text-start">
             <h4>Deposit Funds</h4>
@@ -25,14 +25,15 @@
           <div class="card-header rounded-0 text-start page_headline py-3">
             <h1>Highlights</h1>
           </div>
-          <div v-if="!fixtures.length" class="loading mt-5 text-center">
-            <img src="@/assets/loading.gif" style="height: 40px" alt="" srcset="">
-          </div>
+          
           <fixtures :fixtures="fixtures" v-if="!loading && fixtures.length"></fixtures>
           <infinite-loading v-if="fixtures.length" spinner="spiral" @infinite="infiniteScroll"></infinite-loading>
         </div>
       </div>
     </div>
+    <div v-if="!fixtures.length" class="loading mt-5 text-center">
+        <img src="@/assets/loading.gif" style="height: 40px" alt="" srcset="">
+      </div>
     <div class="card bg-transparent rounded-0 border-0 py-5 my-5" v-if="error">
           <h5>{{ error }}</h5>
           <p>You had a connection issue. Pleasae try again</p>
@@ -63,6 +64,15 @@ export default {
       loading: false,
       error: null
     }
+  },
+  watch: {
+      $route: {
+          immediate: true,
+          handler(to) {
+              // react to route changes...
+              document.title = 'Capital Bet';
+          },
+      },
   },
   computed: {
     url() {

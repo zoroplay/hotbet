@@ -11,7 +11,7 @@
                             <span class="fw-bold"> {{ formatDate(details.event_date) }}</span>
                         </div>
                         <div class="d-flex flex-column">
-                            <h1 class="team" :class="live ? 'text-center' : '' ">{{ details.team_a }} - {{ details.team_b }}</h1>
+                            <h3 class="team" :class="live ? 'text-center' : '' ">{{ details.team_a }} - {{ details.team_b }}</h3>
                             <div class="sport_tournament text-muted" :class="live ? 'text-center' : '' ">
                                 <p class="mb-0"> {{ details.sport_tournament_name }} - {{ details.sport_category_name }} - {{ details.sport_name }} </p>
                             </div>
@@ -59,7 +59,7 @@
                         </div>
                     </div>
                     <div v-if="live">
-                        <div v-for="(i, o) in details.live_data?.markets" :key="o">
+                        <div v-for="(i, o) in sort(details.live_data?.markets)" :key="o">
                             <div class="card-body text-start" v-if="i.active == '1'">
                                 <h6 class="fw-bolder">{{ i.name }}  <span v-if="i.type_id == '5'">O/U {{ i.specialOddsValue }}</span></h6>
                                 <div >
@@ -155,7 +155,12 @@
                 }else{
                     return score;
                 }
-            }
+            },
+            sort: function(arr) {
+                return arr.slice().sort(function(a, b) {
+                    return a.id - b.id;
+                });
+            },
         },
     };
 </script>

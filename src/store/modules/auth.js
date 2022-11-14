@@ -16,11 +16,9 @@ const actions = {
     await dispatch("LogIn", form);
   },
 
-  LogIn({ commit }, user) {
-    axios.post("/auth/login", user).then((res)=>{
-        commit("setUser", res.data.user);
-        commit("setToken", res.data.token)
-    });
+  LogIn({ commit }, res) {
+    commit("setUser", res.data.user);
+    commit("setToken", res.data.token)
   },
 
   async LogOut({ commit }) {

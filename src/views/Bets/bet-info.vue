@@ -33,10 +33,10 @@
                             :key="index">
                             <div>
                                 <div class="justify-content-between d-flex">
-                                    <small>2:04pm <b>Sat 12/11</b></small>
+                                    <small>{{ formatDate(i.created_at) }}</small>
                                     <div>
                                         <span>{{ i.odds }}</span>
-                                        <span class="badge badge-result type-pending bg-secondary mode-circle"><span
+                                        <span :class="i.status === 0 ? 'bg-secondary' : i.status === 1 ? 'bg-success' : i.status === 2 ? 'bg-danger' : 'bg-warning'" class="badge badge-result type-pending mode-circle"><span
                                                 class="text"></span></span>
                                     </div>
                                 </div>
@@ -84,6 +84,7 @@
 
 <script>
     import axios from "@/services/api";
+    import moment from 'moment'
     export default {
         data() {
             return {
@@ -116,6 +117,9 @@
                         console.log(error);
                     });
             },
+            formatDate(date){
+                return moment(date).format('h:mma ddd DD/MM')
+            }
         },
     };
 </script>

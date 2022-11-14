@@ -1,7 +1,7 @@
 <template>
   <div class="center-body">
     <div class="center-content">
-      <div class="center-game_list">
+      <div class="center-game_list" v-if="!loading">
         <div class="card bg-transparent border-0 rounded-0" v-if="!error && !loading">
           <div class="card-header rounded-0 text-start page_headline py-3">
             <h1> <i class="bi bi-activity"></i> Live</h1>
@@ -38,6 +38,9 @@
         <div v-if="!fixtures.length" class="loading mt-5 py-5 text-center">
           <img src="@/assets/loading.gif" style="height: 40px" alt="" srcset="">
         </div>
+      </div>
+      <div v-if="loading" class="loading mt-5 py-5 text-center">
+        <img src="@/assets/loading.gif" style="height: 40px" alt="" srcset="">
       </div>
     </div>
   </div>

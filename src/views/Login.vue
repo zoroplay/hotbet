@@ -5,7 +5,7 @@
           <div class="card-body text-start">
               <h4 class="card-title">Login</h4>
               <p class="card-text">Welcome back. Please log in to your account</p>
-
+              <p class="text-danger fw-bold">{{errorMsg}}</p>
               <form action="">
                   <div class="mb-3">
                     <label for="" class="form-label">Username</label>
@@ -17,12 +17,12 @@
                   </div>
                   <div class="mb-3">
                     <label for="" class="form-label">Password</label>
-                    <input type="text" v-model="formData.password" class="form-control rounded-0 bg-transparent text-white" placeholder="" aria-describedby="helpId">
+                    <input type="password" v-model="formData.password" class="form-control rounded-0 bg-transparent text-white" placeholder="" aria-describedby="helpId">
                   </div>
                   <div class="col-12 mb-3">
-                      <button @click.prevent="submit" class="btn bg-success btn-block rounded-0 w-100 text-white">Log In</button>
+                      <button @click.prevent="submit" :class="loading == true ? 'disabled' : ''" class="btn bg-success border-0 btn-block rounded-0 w-100 text-white">Log In</button>
                   </div>
-                  <a href="" class="text-center text-dark">Forgot Password</a>
+                  <a href="" class="text-center text-white">Forgot Password</a>
               </form>
           </div>
       </div>
@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex"
+import axios from '@/services/api'
 export default {
   name: "Home",
   data(){
@@ -40,20 +40,24 @@ export default {
         username: '',
         password: ''
       },
-      showError: '',
+      showError: false,
+      errorMsg: '',
       loading: false,
     }
   },
   methods:{
-    ...mapActions(["LogIn"]),
-    async submit() {
-      try {
-          await this.LogIn(this.formData);
-          this.$router.push("/");
-          this.showError = false;
-      } catch (error) {
+    submit() {
+      this.loading = true;
+      axios.post("/auth/login", this.formData).then((res)=>{
+        this.$store.dispatch('LogIn', res)
+        this.loading = false,
+        this.$router.push("/");
+      }).catch(err => {
+        this.loading = false
         this.showError = true;
-      }
+        this.errorMsg = 'There was a problem with your login. Try again'
+      })
+          
     },
   }, 
 };
