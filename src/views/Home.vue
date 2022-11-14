@@ -5,7 +5,7 @@
         <img src="@/assets/op.png" class="img-fluid" alt="">
       </div>
       <div class="container">
-        <div class="card page-headline" v-if="user.balance < 100">
+        <div class="card page-headline" v-if="user && user.balance < 100">
           <div class="card-body text-start">
             <h4>Deposit Funds</h4>
             <p class="mb-0">Your balance is low. Deposit Now</p>
