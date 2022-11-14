@@ -3,7 +3,7 @@
     <div class="right-content">
         <div class="balance p-2 text-start">
             <p v-if="!$store.state.auth.user" class="text-white">Not logged in - <router-link to="/Register" class="txt-primary">Join Now</router-link> or <router-link class="txt-primary" to="/Login">Log In</router-link></p>
-            <div v-else>
+            <div v-if="user">
                 <p class="mb-0">Your balance</p>
                 <b>{{ formatBalance(user.balance) }}</b>
             </div>
@@ -41,11 +41,6 @@ export default {
             loadidng: false
         }
     },
-    // computed:{
-    //     user(){
-    //         return this.$store.state.auth.user
-    //     }
-    // }
 }
 </script>
 
@@ -53,6 +48,21 @@ export default {
 .right{
     width: 30% !important;
 }
+
+@media only screen and (min-width: 992px) {
+  .left{
+        width: 28% !important;
+        /* z-index: ; */
+    }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .left{
+        width: 30% !important;
+        /* z-index: ; */
+    }
+}
+
 .right-content{
     height: calc(100vh - 73px);
     border-left: 1px solid rgba(235, 238, 241,.125);

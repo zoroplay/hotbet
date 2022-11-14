@@ -9,6 +9,7 @@ import "bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import moment from "moment";
+import axios from '@/services/api'
 
 import InfiniteLoading from 'vue-infinite-loading'
 Vue.component('infinite-loading', InfiniteLoading)
@@ -27,6 +28,11 @@ Vue.mixin({
     },
     reloadPage(){
       window.location.reload();
+    },
+    getSportsMenu(){
+      axios.get('sports/get-menu?period=all&start=null&end=null').then((res)=>{
+        this.$store.dispatch('setCommitMenu', res.data.menu)
+      })
     }
   }
 })

@@ -79,7 +79,9 @@ export default {
   }
 }
 
-@media screen and (max-width: 600px) {
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
   .center{
     width: 100%;
     margin: 0;
@@ -87,7 +89,33 @@ export default {
     height: calc(100vh - 73px);
   }
 }
-
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+  .center{
+    width: 100%;
+    margin: 0;
+    overflow: auto;
+    height: calc(100vh - 73px);
+  }
+}
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .center{
+    width: calc(100% - 49%);
+    margin: 0 28% 0 21%;
+    overflow-y: auto;
+    height: calc(100vh - 73px);
+  }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .center{
+    width: calc(100% - 53%);
+    margin: 0 30% 0 22%;
+    overflow-y: auto;
+    height: calc(100vh - 73px);
+  }
+}
 .card-header.page_headline{
   background-color: #23313d;
   color: #fff;

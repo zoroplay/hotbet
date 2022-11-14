@@ -13,7 +13,7 @@
                     <router-link class="me-3 fw-bolder small text-white text-decoration-none" to="/Virtual">VIRTUAL</router-link>
                     <router-link class="me-3 fw-bolder small text-white text-decoration-none" to="/Casino">CASINO</router-link>
                 </div>
-                <div class="dropdown d-lg-none">
+                <div v-if="isLoggedIn" class="dropdown d-lg-none">
                     <button type="button" class="btn bg-transparent dropdown-toggle py-0 text-white text-uppercase fw-bold small" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i> menu</button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                         <li><router-link class="dropdown-item" to="#">Messages</router-link></li>
@@ -24,11 +24,22 @@
                         <li><a class="dropdown-item" style="cursor: pointer" @click="logout">Log Out</a></li>
                     </ul>
                 </div>
+                <div v-if="!isLoggedIn" class="btn-group" role="group" aria-label="Basic example">
+                    <div class="dropdown">
+                        <button type="button" class="btn bg-transparent dropdown-toggle text-white text-uppercase fw-bold" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i> menu</button>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                            <li><router-link class="dropdown-item" to="#">Join Now {{isLoggedIn}}</router-link></li>
+                            <li><router-link class="dropdown-item" to="#">Log In</router-link></li>
+                            <li><router-link class="dropdown-item" to="#">Deposit</router-link></li>
+                            <li><router-link class="dropdown-item" to="#">Help</router-link></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="main d-flex justify-content-between align-items-center px-3 py-3 bg-transparent">
             <router-link to="" class="navbar-brand">
-                <img src="@/assets/logo.png" class="img-fluid" style="height: 30px" alt="" />
+                <img src="@/assets/logo1.png" class="img-fluid" style="height: 30px" alt="" />
             </router-link>
             <div class="input-group d-none w-30">
                 <input type="text" class="form-control border-0" placeholder="Recipient's username"
@@ -41,10 +52,10 @@
             <div v-if="!isLoggedIn" class="btn-group" role="group" aria-label="Basic example">
                 <button type="button" class="btn bg-transparent text-white text-uppercase fw-bold">LOGIN</button>
                 <button type="button" class="btn btn-success btn-sm text-uppercase fw-bold">join now</button>
-                <div class="dropdown">
+                <div class="dropdown d-none d-lg-block d-md-block">
                     <button type="button" class="btn bg-transparent dropdown-toggle text-white text-uppercase fw-bold" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i> menu</button>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                        <li><router-link class="dropdown-item" to="#">Join Now</router-link></li>
+                        <li><router-link class="dropdown-item" to="#">Join Now {{isLoggedIn}}</router-link></li>
                         <li><router-link class="dropdown-item" to="#">Log In</router-link></li>
                         <li><router-link class="dropdown-item" to="#">Deposit</router-link></li>
                         <li><router-link class="dropdown-item" to="#">Help</router-link></li>

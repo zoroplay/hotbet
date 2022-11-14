@@ -5,9 +5,8 @@
                 <div class="mb-1">
                     <select class="form-select rounded-0" name="" id="">
                         <option selected>Select one</option>
-                        <option value="">New Delhi</option>
-                        <option value="">Istanbul</option>
-                        <option value="">Jakarta</option>
+                        <option value="" v-for="(sport, index) in sports" :key="index">{{ sport.name }}</option>
+
                     </select>
                 </div>
             </div>
@@ -52,28 +51,11 @@
                             aria-labelledby="flush-headingTwo" data-bs-parent="#accordionFlushExample">
                             <div class="accordion-body">
                                 <ul class="list-group list-group-flush rounded-0 text-start">
-                                    <li v-for="(tournament, index) in tournaments" :key="index" class="list-group-item">{{ tournament.tournament.category.name }}</li>
+                                    <li v-for="(sport, index) in sports[0].categories" :key="index" class="list-group-item">{{ sport.name }}</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="accordion-item">
-                        <h2 class="accordion-header" id="flush-headingThree">
-                            <button class="accordion-button collapsed fw-bold text-uppercase" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#flush-collapseThree" aria-expanded="false"
-                                aria-controls="flush-collapseThree">
-                                Other Countries
-                            </button>
-                        </h2>
-                        <div id="flush-collapseThree" class="accordion-collapse collapse"
-                            aria-labelledby="flush-headingThree" data-bs-parent="#accordionFlushExample">
-                            <div class="accordion-body">Placeholder content for this accordion, which is intended to
-                                demonstrate the <code>.accordion-flush</code> class. This is the third item's accordion
-                                body. Nothing more exciting happening here in terms of content, but just filling up the
-                                space to make it look, at least at first glance, a bit more representative of how this
-                                would look in a real-world application.</div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>
@@ -83,7 +65,15 @@
 <script>
     export default {
         name: 'left-side',
-        props: ['tournaments']
+        props: ['tournaments'],
+        computed:{
+            sports(){
+                return this.$store.state.sports
+            }
+        },
+        created(){
+            this.getSportsMenu()
+        }
     }
 </script>
 
@@ -92,6 +82,22 @@
         width: 22% !important;
         /* z-index: ; */
     }
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .left{
+        width: 21% !important;
+        /* z-index: ; */
+    }
+}
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+  .left{
+        width: 22% !important;
+        /* z-index: ; */
+    }
+}
+
     .left-content{
         height: calc(100vh - 73px);
         border-right: 1px solid rgba(235, 238, 241,.125);
@@ -128,7 +134,8 @@
         background-color: #16202c;
         color: white;
     }
-    .accordion{
-                border-color: rgba(235, 238, 241,.125);
+    .accordion, .accordion-body{
+        border-color: rgba(235, 238, 241,.125);
+        background-color: #16202c;
     }
 </style>

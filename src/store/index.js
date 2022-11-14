@@ -15,12 +15,17 @@ export default new Vuex.Store({
   mutations: {
     setLive(state, value){
       state.live = value;
-      // console.log(state.live);
+    },
+    setMenu(state, payload){
+      state.sports = payload;
     }
   },
   actions: {
     setCommitLive({commit}, value){
       commit('setLive', value)
+    },
+    setCommitMenu({commit},value){
+      commit('setMenu', value)
     }
   },
   modules: {

@@ -22,10 +22,9 @@
                 <span>{{ fixture.sport_name }}</span>/ <span> {{ fixture.sport_tournament_name }} </span>
                 </div>
             </div>
-            <div v-if="fixture.live_data.match_time" class="bets">
+            <div v-if="fixture.live_data?.match_time" class="bets">
                 <live-odds
-
-                    :data="sortFixture(fixture)[0].odds"
+                    v-for="(o, index) in sortFixture(fixture)[0].odds"
                     :key="index"
                     :odds="o.odds"
                     :name="o.name"
@@ -90,9 +89,7 @@ export default {
     sortFixture(fixture){
       // let fixtures = []
       // return this.fixtures.filter((x) => x.sport_id == sport_id);
-      if(Array.isArray(fixture.live_data)){
-          return this.sort(fixture.live_data.markets).slice(0,1);
-      }
+      return this.sort(fixture.live_data.markets).slice(0,1);
     },
   }
 };
