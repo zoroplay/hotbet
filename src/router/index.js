@@ -35,38 +35,8 @@ const routes = [
             "Capital Bet",
         },
         {
-          name: "description",
-          content:
-            "Spotika is most secured and trusted online casino in Kenya. Sign On Bonus to Play your favorite casino games online. Register with Spotika and start the fun today.",
-        },
-        {
-          name: "keywords",
-          content:
-            "Betting Site with Highest Odds in Kenya, Betting App in Kenya.",
-        },
-        {
-          property: "og:description",
-          content:
-            "Spotika | Get the Highest ODDS in Kenya, Fastest Live Betting, Easiest Jackpots & Instant Payouts",
-        },
-        {
-          property: "twitter:description",
-          content:
-            "Spotika | Get the Highest ODDS in Kenya, Fastest Live Betting, Easiest Jackpots & Instant Payouts",
-        },
-        {
-          property: "twitter:title",
-          content:
-            "Spotika | Get the Highest ODDS in Kenya, Fastest Live Betting, Easiest Jackpots & Instant Payouts",
-        },
-        {
-          property: "og:title",
-          content:
-            "Spotika | Get the Highest ODDS in Kenya, Fastest Live Betting, Easiest Jackpots & Instant Payouts",
-        },
-        {
           property: "og:url",
-          content: "spotika.co.ke",
+          content: "capitalbet.ug",
         },
         {
           property: "og:type",
