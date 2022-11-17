@@ -27,7 +27,7 @@
             <div class="card page-headline">
               <div class="card-body px-2">
                 <i class="bi bi-calendar-event"></i> <br />
-                <small>Upcoming</small>
+                <small>Casino</small>
               </div>
             </div>
           </router-link>

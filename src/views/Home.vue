@@ -13,13 +13,21 @@
         </div>
       </div>
       <mobile-mini></mobile-mini>
+      
       <!-- Live -->
-      <live :limit="5"></live>
+      <live :limit="3"></live>
       <!-- <live-fixtures></live-fixtures> -->
       <div class="text-center my-3 d-none">
-        <router-link to="/Live" class="text-white text-decoration-none btn btn-secondary btn-sm rounded-0">More Live Now <i class="bi bi-arrow-right"></i></router-link>
+        <router-link to="/Live" class="text-white text-decoration-none btn btn-secondary btn-sm rounded-50">More Live Now <i class="bi bi-arrow-right"></i></router-link>
       </div>
       <!-- Live -->
+      <div class="p-3 d-flex justify-content-start align-items">
+        <button class="btn rounded-0 btn-outline-secondary active btn-sm me-2 rounded-pill px-4">All</button>
+        <button class="btn rounded-0 btn-outline-secondary btn-sm me-2 rounded-pill px-4">1hr</button>
+        <button class="btn rounded-0 btn-outline-secondary btn-sm me-2 rounded-pill px-4">3hr</button>
+        <button class="btn rounded-0 btn-outline-secondary btn-sm me-2 rounded-pill px-4">24hr</button>
+        <button class="btn rounded-0 btn-outline-secondary btn-sm me-2 rounded-pill px-4">72hr</button>
+      </div>
       <div class="center-game_list">
         <div class="card bg-transparent border-0 rounded-0">
           <div class="card-header rounded-0 text-start page_headline py-3">

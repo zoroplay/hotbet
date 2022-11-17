@@ -14,6 +14,7 @@
         </div>
       </div>
     </div>
+    <betslip-footer :betslip="selections"></betslip-footer>
   </div>
 </template>
 
@@ -22,9 +23,10 @@ import axios from "@/services/api";
 import Navbar from "./components/Navbar.vue";
 import LeftSide from "./components/LeftSide.vue";
 import RightSide from "./components/RightSide.vue";
+import BetslipFooter from './components/BetslipFooter.vue';
 
 export default {
-  components: { Navbar, LeftSide, RightSide },
+  components: { Navbar, LeftSide, RightSide, BetslipFooter },
   name: "app",
   data() {
     return {
@@ -35,6 +37,9 @@ export default {
     sports() {
       return this.$store.state.sports;
     },
+    selections(){
+      return this.$store.state.coupon.betslip;
+    }
   },
   methods: {
     getTournaments() {
