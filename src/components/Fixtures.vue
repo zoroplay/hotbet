@@ -1,83 +1,103 @@
 <template>
   <div class="fixture">
     <div
-    class="card-body text-start "
-    v-for="(fixture, index) in fixtures"
-    :key="index"
+      class="card-body text-start "
+      v-for="(fixture, index) in fixtures"
+      :key="index"
     >
-        <router-link :to="{ name: 'match', params: { event_id: fixture.provider_id === undefined ? 0 : fixture.provider_id, name: toURL(fixture.event_name), status: live ? 'live' : 'prematch' }}" class="text-dark text-decoration-none" style="text-decoration: none;">
-            <div class="d-flex justify-content-start fixture_time_date">
-                <span class="pe-2 text-white-50">{{ fixture.event_time }} </span> <span class="fw-bold text-white-50"> {{ formatDate(fixture.event_date) }}</span>
-            </div>
-            <div class="d-flex flex-column">
-                <div class="d-flex justify-content-between">
-                    <span class="team text-white">{{ fixture.team_a }}</span>
-                </div>
-                <div class="d-flex justify-content-between">
-                  <span class="team text-white">{{ fixture.team_b }}</span>
-                </div>
-                <div class="sport_tournament text-muted">
-                <span>{{ fixture.sport_name }}</span>/ <span> {{ fixture.sport_tournament_name }} </span>
-                </div>
-            </div>
-
-            <div class="bets" >
-                <odds
-                    v-for="(o, index) in fixture.odds"
-                    :key="index"
-                    :odds="o.odds"
-                    :name="o.name"
-                    :status="o.active"
-                ></odds>
-                <div class="bets-markets">
-                    <a class="text-decoration-none">+{{ fixture.markets_count }}</a>
-                </div>
-            </div>
+      <div
+        class="text-dark text-decoration-none"
+        style="text-decoration: none;"
+      >
+        <div class="d-flex justify-content-start fixture_time_date">
+          <span class="pe-2 text-white-50">{{ fixture.event_time }} </span>
+          <span class="fw-bold text-white-50">
+            {{ formatDate(fixture.event_date) }}</span
+          >
+        </div>
+        <router-link
+          :to="{
+            name: 'match',
+            params: {
+              event_id:
+                fixture.provider_id === undefined ? 0 : fixture.provider_id,
+              name: toURL(fixture.event_name),
+              status: live ? 'live' : 'prematch'
+            }
+          }"
+         class="d-flex flex-column"
+         style="text-decoration: none"
+        >
+          <div class="d-flex justify-content-between">
+            <span class="team text-white">{{ fixture.team_a }}</span>
+          </div>
+          <div class="d-flex justify-content-between">
+            <span class="team text-white">{{ fixture.team_b }}</span>
+          </div>
+          <div class="sport_tournament text-muted">
+            <span>{{ fixture.sport_name }}</span
+            >/ <span> {{ fixture.sport_tournament_name }} </span>
+          </div>
         </router-link>
+
+        <div class="bets">
+          <odds
+            v-for="(o, index) in fixture.odds"
+            :key="index"
+            :outcome="o"
+            :status="o.active"
+            :fixture="fixture"
+            :predictions="predictions"
+          />
+          <div class="bets-markets">
+            <a class="text-decoration-none">+{{ fixture.markets_count }}</a>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-import Odds from './Odds.vue';
-import moment from 'moment';
+import Odds from "./Odds.vue";
+import moment from "moment";
 export default {
   components: { Odds },
-  props: ["fixtures","live"],
-  methods:{
+  props: ["fixtures", "live", "predictions"],
+  methods: {
     toURL(name) {
-        if (name === undefined) {
-            return "-";
-        }
-        return name.replace(/[^a-z0-9+]+/gi, '-');
+      if (name === undefined) {
+        return "-";
+      }
+      return name.replace(/[^a-z0-9+]+/gi, "-");
     },
-    formatDate(date){
-        return moment(date).format('ddd DD/MM')
+    formatDate(date) {
+      return moment(date).format("ddd DD/MM");
     },
-    getHomeScore(score){
+    getHomeScore(score) {
       return score;
     },
-    getAwayScore(score){
+    getAwayScore(score) {
       return score;
     },
-    
+
     sort: function(arr) {
       // let odds = arr.live_data.markets;
       return arr.slice().sort(function(a, b) {
         return a.id - b.id;
       });
     },
-    sortFixture(fixture){
-      console.log(this.sort(fixture.live_data.markets).slice(0,1));
-      return this.sort(fixture.live_data.markets).slice(0,1);
-    },
+    sortFixture(fixture) {
+      console.log(this.sort(fixture.live_data.markets).slice(0, 1));
+      return this.sort(fixture.live_data.markets).slice(0, 1);
+    }
   }
 };
 </script>
 
 <style>
-.fixture>.card-body{
-  border-bottom: .5px solid rgba(235, 238, 241,.125);
+.fixture > .card-body {
+  border-bottom: 0.5px solid rgba(235, 238, 241, 0.125);
 }
 .team {
   font-size: 18px;
@@ -145,21 +165,20 @@ export default {
 }
 
 .bets-markets a {
-    font-weight: bolder;
-    background: 0 0;
-    border-radius: 0;
-    color: #fff;
-    white-space: nowrap;
-    background-color: #23313d;
+  font-weight: bolder;
+  background: 0 0;
+  border-radius: 0;
+  color: #fff;
+  white-space: nowrap;
+  background-color: #23313d;
 
-    padding: 9px 6px;
-    min-width: 46px;
-    text-align: center;
-    display: block;
-    font-size: 14px;
-    line-height: 16px;
+  padding: 9px 6px;
+  min-width: 46px;
+  text-align: center;
+  display: block;
+  font-size: 14px;
+  line-height: 16px;
 }
-
 
 /* .bets-markets a:hover  {
     background: #252a2d;
@@ -167,12 +186,8 @@ export default {
     border: 1px solid #252a2d;
 } */
 
-
-.score{
+.score {
   font-weight: 800;
   font-size: 22px;
 }
-
-
-
 </style>

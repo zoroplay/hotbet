@@ -1,27 +1,50 @@
 <template>
   <!-- <div class="bets"> -->
-      <div class="bet">
-        <span class="event_selection" v-if="status == '1'">
-          {{ name }}
-        </span>
-        <span class="event_odds" v-if="status == '1'">
-          {{ odds }}
-        </span>
-        <span class="event_odds" v-if="status == '0'">
-          <i class="bi bi-lock text-white-50"></i>
-        </span>
-      </div>
+  <div class="bet" @click="addToBetslip">
+    <span class="event_selection" v-if="status == '1'">
+      {{ outcome.name }}
+    </span>
+    <span class="event_odds" v-if="status == '1'">
+      {{ outcome.odds }}
+    </span>
+    <span class="event_odds" v-if="status == '0'">
+      <i class="bi bi-lock text-white-50"></i>
+    </span>
+  </div>
 </template>
 
 <script>
 export default {
-    name: "odds",
-    props: ['odds', 'name', 'status', "live"]
+  name: "odds",
+  props: ["outcome", "status", "live", "fixture", "predictions"],
+  methods: {
+    createID(event_id, market_id, odd_name, odd_id) {
+      let oddname = String(odd_name).replace(/[^a-zA-Z0-9]/g, "_");
+      return event_id + "_" + market_id + "_" + oddname + "_" + odd_id;
+    },
+    addToBetslip() {
+      const data = {
+        fixture: this.fixture,
+        market_id: this.predictions[0].market_id,
+        market_name: this.predictions[0].market_name,
+        odds: this.outcome.odds,
+        odd_id: this.outcome.id,
+        odd_name: this.outcome.name,
+        ele_id: this.createID(
+          this.fixture.provider_id,
+          this.predictions[0].market_id,
+          this.outcome.name,
+          this.outcome.id
+        ),
+        fixture_type: this.fixture.fixture_type
+      };
+      this.$store.dispatch("addToCoupon", data);
+    }
+  }
 };
 </script>
 
 <style>
-
 .bets {
   display: -webkit-box;
   display: -webkit-flex;

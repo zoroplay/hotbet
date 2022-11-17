@@ -26,7 +26,7 @@
             <h1>Highlights</h1>
           </div>
           
-          <fixtures :fixtures="fixtures" v-if="!loading && fixtures.length"></fixtures>
+          <fixtures :fixtures="fixtures" v-if="!loading && fixtures.length" :predictions="predictions" />
           <infinite-loading v-if="fixtures.length" spinner="spiral" @infinite="infiniteScroll"></infinite-loading>
         </div>
       </div>
@@ -58,6 +58,7 @@ export default {
   data(){
     return {
       fixtures: [],
+      predictions: [],
       page: 1,
       tournaments: [],
       live: this.$store.state.live,
@@ -95,6 +96,7 @@ export default {
     async getHighlights() {
       const resp = await axios.get(this.url)
       this.fixtures = resp.data.fixtures.data;
+      this.predictions = resp.data.predictions;
       // console.log(this.fixtures)
     },
     infiniteScroll($state) {

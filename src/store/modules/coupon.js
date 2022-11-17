@@ -6,6 +6,7 @@ import {
   checkIfHasLive,
   groupTournament,
 } from "../../mixins/coupon";
+
 const state = {
   betPlaced: null,
   loadedCoupon: null,
@@ -56,7 +57,7 @@ const actions = {
       category: selection.fixture.sport_category_name,
       sport: selection.fixture.sport_name,
       type: selection.fixture_type,
-      fixed: false,
+      fixed: false
     };
     if (data.type === "live") {
       data.in_play_time = selection.fixture.live_data?.match_time;
@@ -107,6 +108,7 @@ const actions = {
       //   couponData.selections,
       //   "provider_id"
       // );
+
       // check if event is live
       if (data.type === "live") couponData.hasLive = true;
       //update bets state in redux
@@ -117,6 +119,7 @@ const actions = {
         //check if it's same event selected and remove it
         if (couponData.selections[i].element_id === data.element_id) {
           //remove item
+
           // console.log("same item");
           couponData.selections.splice(i, 1);
 
@@ -146,6 +149,7 @@ const actions = {
             couponData.wthTax = winnings.wthTax;
             couponData.grossWin = winnings.grossWin;
             // check if has live
+            couponData.hasLive = this.checkIfHasLive(couponData.selections);
             commit("setCouponData", couponData);
           } else {
             commit("resetCoupon");
@@ -193,6 +197,7 @@ const actions = {
       );
       //check bet type
       couponData.bet_type = checkBetType(couponData);
+
       // check if event is live
       if (data.type === "live") couponData.hasLive = true;
 
@@ -203,6 +208,7 @@ const actions = {
         globalVars,
         bonusList
       );
+
       couponData.maxWin = winnings.maxWin;
       couponData.maxBonus = winnings.maxBonus;
       couponData.wthTax = winnings.wthTax;
@@ -352,5 +358,5 @@ export default {
   state,
   getters,
   actions,
-  mutations,
+  mutations
 };

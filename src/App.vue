@@ -45,6 +45,7 @@ export default {
   },
   mounted() {
     this.getTournaments();
+    this.$store.dispatch("setCommitSiteData");
   },
 };
 </script>
