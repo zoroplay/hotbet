@@ -6,14 +6,7 @@
           <div class="card-header rounded-0 text-start page_headline py-3">
             <h1> <i class="bi bi-activity"></i> Live</h1>
           </div>
-          <div v-if="loading" class="loading mt-5 text-center">
-            <img
-              src="@/assets/loading.gif"
-              style="height: 40px"
-              alt=""
-              srcset=""
-            />
-          </div>
+          
           <!-- <fixtures
             :fixtures="games"
             :live="live"
@@ -35,9 +28,6 @@
                 <button @click="reloadPage" class="btn btn-sm btn-secondary rounded-0">Reload Page</button>
             </div>
         </div>
-        <div v-if="!fixtures.length" class="loading mt-5 py-5 text-center">
-          <img src="@/assets/loading.gif" style="height: 40px" alt="" srcset="">
-        </div>
       </div>
       <div v-if="loading" class="loading mt-5 py-5 text-center">
         <img src="@/assets/loading.gif" style="height: 40px" alt="" srcset="">
@@ -54,7 +44,7 @@ import axios from "@/services/api";
 import LiveFixtures from '../components/LiveFixtures.vue';
 export default {
   components: { LiveFixtures },
-  name: "Home",
+  name: "Live",
   props: ["limit"],
   data() {
     return {
