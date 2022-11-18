@@ -1,10 +1,9 @@
 import {
-  calculateBonus,
   calculateTotalOdds,
   calculateWinnings,
   checkBetType,
   checkIfHasLive,
-  groupTournament,
+  groupTournament
 } from "../../mixins/coupon";
 
 const state = {
@@ -27,8 +26,8 @@ const state = {
     maxOdds: 1,
     wthTax: 0,
     exciseDuty: 0,
-    useBonus: false,
-  },
+    useBonus: false
+  }
 };
 
 const getters = {
@@ -84,7 +83,7 @@ const actions = {
         event_type: data.type,
         channel: "mobile",
         wthTax: 0,
-        exciseDuty: 0,
+        exciseDuty: 0
       };
       couponData.bet_type = "Single";
       couponData.selections.push(data);
@@ -92,18 +91,12 @@ const actions = {
         parseFloat(couponData.totalOdds) * parseFloat(data.odds)
       ).toFixed(2);
       //calculate and get pot winnings with bonus
-      const winnings = calculateWinnings(
-        couponData,
-        globalVars,
-        bonusList
-      );
+      const winnings = calculateWinnings(couponData, globalVars, bonusList);
       couponData.maxWin = winnings.maxWin;
       couponData.maxBonus = winnings.maxBonus;
       couponData.wthTax = winnings.wthTax;
       couponData.grossWin = winnings.grossWin;
-      couponData.tournaments = groupTournament(
-        couponData.selections
-      );
+      couponData.tournaments = groupTournament(couponData.selections);
       // couponData.grouped = groupSelections(
       //   couponData.selections,
       //   "provider_id"
@@ -113,7 +106,6 @@ const actions = {
       if (data.type === "live") couponData.hasLive = true;
       //update bets state in redux
       commit("setCouponData", couponData);
-
     } else {
       for (let i = 0; i < couponData.selections.length; i++) {
         //check if it's same event selected and remove it
@@ -128,16 +120,10 @@ const actions = {
           //check if couponData still has selections
           if (couponData.selections.length > 0) {
             //group selections by match
-            couponData.tournaments = groupTournament(
-              couponData.selections
-            );
-            couponData.hasLive = checkIfHasLive(
-                couponData.selections
-            );
-              //check bet type
-            couponData.bet_type = checkBetType(
-              couponData
-            );
+            couponData.tournaments = groupTournament(couponData.selections);
+            couponData.hasLive = checkIfHasLive(couponData.selections);
+            //check bet type
+            couponData.bet_type = checkBetType(couponData);
 
             const winnings = calculateWinnings(
               couponData,
@@ -150,9 +136,9 @@ const actions = {
             couponData.grossWin = winnings.grossWin;
             // check if has live
             couponData.hasLive = this.checkIfHasLive(couponData.selections);
-            commit("setCouponData", couponData);
+            return commit("setCouponData", couponData);
           } else {
-            commit("resetCoupon");
+            return commit("clearBetslip");
           }
         }
       }
@@ -163,26 +149,18 @@ const actions = {
           // add new selection
           couponData.selections.push(data);
           // recalculate total odds
-          couponData.totalOdds = calculateTotalOdds(
-            couponData.selections
-          );
+          couponData.totalOdds = calculateTotalOdds(couponData.selections);
 
           //group selections by match
-          couponData.tournaments = groupTournament(
-            couponData.selections
-          );
+          couponData.tournaments = groupTournament(couponData.selections);
 
           //calculate and get pot winnings with bonus
-          const winnings = calculateWinnings(
-            couponData,
-            globalVars,
-            bonusList
-          );
+          const winnings = calculateWinnings(couponData, globalVars, bonusList);
           couponData.maxWin = winnings.maxWin;
           couponData.maxBonus = winnings.maxBonus;
           // couponData.grossWin = winnings.grossWin;
 
-          commit("setCouponData", couponData);
+          return commit("setCouponData", couponData);
         }
       }
 
@@ -192,9 +170,7 @@ const actions = {
       //add selection to selections list
       couponData.selections.push(data);
       //group selections by match
-      couponData.tournaments = groupTournament(
-        couponData.selections
-      );
+      couponData.tournaments = groupTournament(couponData.selections);
       //check bet type
       couponData.bet_type = checkBetType(couponData);
 
@@ -203,18 +179,14 @@ const actions = {
 
       // couponData.combos = await getCombos(couponData);
       //calculate and get pot winnings with bonus
-      const winnings = calculateWinnings(
-        couponData,
-        globalVars,
-        bonusList
-      );
+      const winnings = calculateWinnings(couponData, globalVars, bonusList);
 
       couponData.maxWin = winnings.maxWin;
       couponData.maxBonus = winnings.maxBonus;
       couponData.wthTax = winnings.wthTax;
       couponData.grossWin = winnings.grossWin;
 
-      commit("setCouponData", couponData);
+      return commit("setCouponData", couponData);
     }
   },
 
@@ -224,104 +196,60 @@ const actions = {
     const bonusList = [...rootState.SportsbookBonusList];
     //find item index
     let index = couponData.selections.findIndex(
-      (item) =>
+      item =>
         item.event_id === selection.event_id && item.odd_id === selection.odd_id
     );
     //remove item from list
     couponData.selections.splice(index, 1);
     //check if couponData still has selections
     if (couponData.selections.length > 0) {
-      const prevBetType = couponData.bet_type;
       //group selections by match
-      couponData.tournaments = groupTournament(
-        couponData.selections
-      );
+      couponData.tournaments = groupTournament(couponData.selections);
       // couponData.fixtures = groupSelections(couponData.selections);
       //check bet type
       couponData.bet_type = checkBetType(couponData);
 
-      if (couponData.bet_type === "Split") {
-        couponData = getSplitProps(couponData);
-        //calculate winnings
-        const minWinnings =
-          parseFloat(couponData.minOdds) * parseFloat(couponData.minStake);
-        const maxWinnings =
-          parseFloat(couponData.maxOdds) * parseFloat(couponData.minStake);
-        //calculate bonus
-        couponData.minBonus = calculateBonus(
-          minWinnings,
-          couponData,
-          globalVars,
-          bonusList
-        );
-        couponData.maxBonus = calculateBonus(
-          maxWinnings,
-          couponData,
-          globalVars,
-          bonusList
-        );
-        couponData.minGrossWin = parseFloat(couponData.minBonus) + minWinnings;
-        couponData.minWTH =
-          ((couponData.minGrossWin - couponData.stake) * 0) / 100;
-        couponData.minWin = couponData.minGrossWin - couponData.minWTH;
-        couponData.grossWin = parseFloat(couponData.maxBonus) + maxWinnings;
-        couponData.wthTax =
-          ((couponData.grossWin - couponData.stake) * 0) / 100;
-        couponData.maxWin = couponData.grossWin - couponData.wthTax;
-      } else {
-        // recalculate totalOdds if prev bet type was Split
-        if (prevBetType === "Split") {
-          couponData.totalOdds = calculateTotalOdds(couponData.selections);
-        } else {
-          // else remove selection from total odds
-          couponData.totalOdds = (
-            parseFloat(couponData.totalOdds) / parseFloat(selection.odds)
-          ).toFixed(2);
-        }
-        // check if has live
-        couponData.hasLive = checkIfHasLive(couponData.selections);
+      // recalculate totalOdds if prev bet type was Split
 
-        const calculatedGroup = couponCalculation.calcCombinations(couponData);
-        couponData.combos = calculatedGroup.Groups;
-        // couponData.combos = await getCombos(couponData);
-        //calculate and get pot winnings with bonus
-        if (couponData.bet_type === "Combo") {
-          commit("setCouponData", couponData);
-          if (couponData.Groupings && couponData.Groupings.length) {
-            const calculatedCoupon = couponCalculation.calcPotentialWins(
-              couponData,
-              bonusList
-            );
-            couponData = couponData.updateFromCalculatedCoupon(
-              couponData,
-              calculatedCoupon
-            );
-            // update combos with max win
-            couponData.combos.forEach((combo) => {
-              for (let i = 0; i < couponData.Groupings.length; i++) {
-                if (combo.Grouping === couponData.Groupings[i].Grouping) {
-                  combo.minWIn = couponData.Groupings[i].minWin;
-                  combo.maxWin = couponData.Groupings[i].maxWin;
-                  combo.Stake = couponData.Groupings[i].Stake;
-                }
-              }
-            });
-            setTimeout(() => {
-              return dispatch(updateComboWinningsFromTotal());
-            }, 500);
-          }
-        } else {
-          const winnings = calculateWinnings(couponData, globalVars, bonusList);
-          couponData.maxWin = winnings.maxWin;
-          couponData.maxBonus = winnings.maxBonus;
-          couponData.wthTax = winnings.wthTax;
-          couponData.grossWin = winnings.grossWin;
-          commit("setCouponData", couponData);
-        }
-      }
+      // else remove selection from total odds
+      couponData.totalOdds = (
+        parseFloat(couponData.totalOdds) / parseFloat(selection.odds)
+      ).toFixed(2);
+
+      // check if has live
+      couponData.hasLive = checkIfHasLive(couponData.selections);
+
+      //calculate and get pot winnings with bonus
+      const winnings = calculateWinnings(couponData, globalVars, bonusList);
+      couponData.maxWin = winnings.maxWin;
+      couponData.maxBonus = winnings.maxBonus;
+      couponData.wthTax = winnings.wthTax;
+      couponData.grossWin = winnings.grossWin;
+      return commit("setCouponData", couponData);
     } else {
-      return dispatch({ type: CANCEL_BET });
+      return commit("clearBetslip");
     }
+  },
+
+  updateWinnings({ commit, state, rootState }, stake) {
+    let coupondata = { ...state.betslip };
+    const globalVars = { ...rootState.SportsbookGlobalVariable };
+    const bonusList = [...rootState.SportsbookBonusList];
+    console.log(stake);
+    coupondata.totalStake = stake;
+
+    if (stake !== "") {
+      coupondata.exciseDuty = (coupondata.totalStake * 0) / 100;
+      coupondata.stake = coupondata.totalStake - coupondata.exciseDuty;
+      //calculate Winnings
+      let winnings = calculateWinnings(coupondata, globalVars, bonusList);
+      coupondata.maxWin = winnings.maxWin;
+      coupondata.maxBonus = winnings.maxBonus;
+      coupondata.wthTax = winnings.wthTax;
+      coupondata.grossWin = winnings.grossWin;
+    }
+    //set coupon data in redux
+    return commit("setCouponData", coupondata);
   },
 
   clearBetslip({ commit }) {
@@ -335,11 +263,145 @@ const actions = {
       minBonus: 0,
       stake: 0,
       totalStake: 0,
-      useBonus: false,
+      useBonus: false
     };
 
     commit("cancelBet", data);
   },
+
+  // placeBet({commit, state, rootState}, e) {
+  //   commit("doLoading");
+  //       // console.log(e);
+  //       // set button ele
+  //       let ele = e.target;
+  //       // grab current state
+  //       const coupondata = {...state.coupon.betslip};
+  //       // add giftCode to coupondata
+
+  //       if (coupondata.stake === 0){
+  //           commit("doLoading");
+  //           toast.error('Stake cannot be 0');
+  //           return;
+  //       }
+
+  //       if (coupondata.selections.length === 2 && coupondata.stake > 2000){
+  //         commit("doLoading");
+  //         toast.error('Maximum stake for 2 selections is N2,000');
+  //           return;
+  //       }
+
+  //       const hasMoreDraws = checkNoOfDraws(coupondata.selections);
+
+  //       if (hasMoreDraws) {
+  //           toast.error(`You cannot play more than 5 draws in one ticket`);
+  //           return;
+  //       }
+
+  //       let url;
+  //       if (type === 'bet') {
+  //           url = `sports/place-bet?channel=website`;
+  //           // check if user has been self excluded
+  //           const {user} = {...state.auth};
+
+  //           if (user.settings?.self_exclusion_period) {
+  //               toast.error(`You have been temporary locked out for the next ${calculateExclusionPeriod(user.settings?.self_exclusion_period)} days due to your responsible gaming self exclusion settings.`)
+  //               return;
+  //           }
+
+  //       } else {
+  //           url = '/sports/book-bet?channel=website'
+  //       }
+  //       ele.disabled = true;
+  //       const prevHTML = ele.innerHTML;
+  //       ele.innerHTML = '...';
+
+  //       Http.post(url, coupondata).then(res => {
+  //           ele.disabled = false;
+  //           commit("doLoading");
+  //           ele.innerHTML = prevHTML;
+
+  //           if (res.success) {
+  //               if (type === 'bet') {
+  //                   // update user balance
+  //                   dispatch({type: UPDATE_USER_BALANCE, payload: res.balance});
+  //                   // update todays bet
+  //                   dispatch({type: SET_TODAYS_BET, payload: res.coupon});
+  //                   dispatch({type: CANCEL_BET});
+  //                   printTicket(res.coupon.betslip_id, 'bet')
+  //               } else {
+  //                   ele.innerHTML = prevHTML;
+  //               }
+  //               return dispatch({type: SET_BET_PLACED, payload: res});
+  //           } else if (res.message === 'auth_fail') {
+  //               return dispatch({type: SHOW_LOGIN_MODAL})
+  //           } else if (res.error === 'odds_change') {
+  //               // let bets = this.$store.getters.bets;
+  //               _.each(coupondata.selection, function (value) {
+  //                   _.each(res.events, function (item) {
+  //                       if (value.provider_id === item.provider_id && value.odd_name === item.odd_name) {
+  //                           value.hasError = true;
+  //                       }
+  //                   });
+  //               });
+  //               toast.error('Attention! some odds have been changed');
+
+  //               coupondata.errorMsg = 'Attention! some odds have been changed';
+  //               coupondata.hasError = true;
+
+  //               //update bets state in redux
+  //               return dispatch({type: SET_COUPON_DATA, payload: coupondata});
+
+  //           } else if (res.error === 'events_started') {
+  //               _.each(coupondata.selections, (value) => {
+  //                   _.each(res.events, (item) => {
+  //                       if (value.event_id === item.event_id) {
+  //                           value.hasError = true
+  //                       }
+  //                   });
+  //               });
+  //               toast.error('Attention! Some events have started');
+
+  //               coupondata.errorMsg = 'Attention! Some events have started';
+  //               coupondata.hasError = true;
+  //               coupondata.tournaments = groupTournament(coupondata.selections);
+  //               // coupondata.fixtures = groupSelections(coupondata.selections);
+  //               //update bets state in redux
+  //               return dispatch({type: SET_COUPON_DATA, payload: coupondata});
+
+  //           } else if (res.error === 'events_finished') {
+  //               _.each(coupondata.selections, (value) => {
+  //                   _.each(res.events, (item) => {
+  //                       if (value.event_id === item.event_id) {
+  //                           value.hasError = true
+  //                       }
+  //                   });
+  //               });
+  //               toast.error('Attention! Some events have ended. Remove them to continue.');
+
+  //               coupondata.errorMsg = 'Attention! Some events have ended. Remove them to continue.';
+  //               coupondata.hasError = true;
+  //               coupondata.tournaments = groupTournament(coupondata.selections);
+  //               // coupondata.fixtures = groupSelections(coupondata.selections)
+  //               // update bets state in redux
+  //               return dispatch({type: SET_COUPON_DATA, payload: coupondata});
+
+  //           } else {
+  //               dispatch({type: LOADING});
+            
+  //               toast.error(res.message || 'Something went wrong. We were unable to accept betslip.');
+  //           }
+  //       }).catch(err => {
+  //           dispatch({type: LOADING});
+
+  //           ele.disabled = false;
+  //           ele.innerHTML = prevHTML;
+
+  //           if(err.response.status === 401){
+  //               toast.error('Please login to place bets');
+  //           }
+  //           // console.log(err);
+  //       });
+  // }
 };
 
 const mutations = {
@@ -351,7 +413,7 @@ const mutations = {
   },
   cancelBet(state, value) {
     state.betslip = value;
-  },
+  }
 };
 
 export default {

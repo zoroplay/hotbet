@@ -1,6 +1,22 @@
 <template>
   <!-- <div class="bets"> -->
-  <div class="bet" @click="addToBetslip">
+  <div
+    class="bet"
+    :class="
+      isSelected(
+        createID(
+          fixture.provider_id,
+          predictions[0].market_id,
+          outcome.name,
+          outcome.id
+        ),
+        betslip
+      )
+        ? 'selected'
+        : ''
+    "
+    @click="addToBetslip"
+  >
     <span class="event_selection" v-if="status == '1'">
       {{ outcome.name }}
     </span>
@@ -17,11 +33,12 @@
 export default {
   name: "odds",
   props: ["outcome", "status", "live", "fixture", "predictions"],
+  computed: {
+    betslip() {
+      return this.$store.state.coupon.betslip;
+    }
+  },
   methods: {
-    createID(event_id, market_id, odd_name, odd_id) {
-      let oddname = String(odd_name).replace(/[^a-zA-Z0-9]/g, "_");
-      return event_id + "_" + market_id + "_" + oddname + "_" + odd_id;
-    },
     addToBetslip() {
       const data = {
         fixture: this.fixture,
@@ -77,6 +94,10 @@ export default {
   background-color: #23313d;
   color: #fff;
   padding: 10px;
+}
+
+.bets .selected {
+  background-color: #ee3135;
 }
 
 .bet .event_selection {
