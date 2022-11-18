@@ -31,9 +31,9 @@
                         <div class="dropdown">
                             <button type="button" class="btn bg-transparent dropdown-toggle text-white text-uppercase fw-bold" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i> menu</button>
                             <ul class="dropdown-menu rounded-0 shadow" aria-labelledby="dropdownMenuButton1">
-                                <li><router-link class="dropdown-item" to="#">Join Now</router-link></li>
-                                <li><router-link class="dropdown-item" to="#">Log In</router-link></li>
-                                <li><router-link class="dropdown-item" to="#">Deposit</router-link></li>
+                                <li><router-link class="dropdown-item" to="/Regsiter">Join Now</router-link></li>
+                                <li><router-link class="dropdown-item" to="/Login">Log In</router-link></li>
+                                <li><router-link class="dropdown-item" to="/Login">Deposit</router-link></li>
                                 <li><router-link class="dropdown-item" to="#">Help</router-link></li>
                             </ul>
                         </div>
@@ -60,9 +60,9 @@
                 <div class="dropdown d-none d-lg-block d-md-block">
                     <button type="button" class="btn bg-transparent dropdown-toggle text-white text-uppercase fw-bold" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i> menu</button>
                     <ul class="dropdown-menu shadow" aria-labelledby="dropdownMenuButton1">
-                        <li><router-link class="dropdown-item" to="#">Join Now {{isLoggedIn}}</router-link></li>
-                        <li><router-link class="dropdown-item" to="#">Log In</router-link></li>
-                        <li><router-link class="dropdown-item" to="#">Deposit</router-link></li>
+                        <li><router-link class="dropdown-item" to="/Register">Join Now</router-link></li>
+                        <li><router-link class="dropdown-item" to="/Login">Log In</router-link></li>
+                        <li><router-link class="dropdown-item" to="/Deposit">Deposit</router-link></li>
                         <li><router-link class="dropdown-item" to="#">Help</router-link></li>
                     </ul>
                 </div>

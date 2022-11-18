@@ -27,7 +27,7 @@
                     <input type="password" v-model="formData.password" id="" class="form-control rounded-0 text-white bg-transparent" placeholder="" aria-describedby="helpId">
                   </div>
                   <div class="col-12 mb-3 ">
-                      <button @click.prevent="submit" :class="loading == true ? 'disabled' : ''" class="btn bg-success btn-block border-0 rounded-0 w-100 text-white">JOIN NOW</button>
+                      <router-link to="/Regsiter" @click.prevent="submit" :class="loading == true ? 'disabled' : ''" class="btn bg-success btn-block border-0 rounded-0 w-100 text-white">JOIN NOW</router-link>
                   </div>
                   <router-link to="/Login" class="text-dark ">I have an account</router-link>
               </form>
