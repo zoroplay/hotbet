@@ -6,7 +6,7 @@
       :key="index"
     >
       <div class="d-flex justify-content-start fixture_time_date">
-        <span class="pe-2 text-danger"
+        <span class="pe-2 text-danger fw-bold"
           >Live {{ fixture.live_data.match_time ?? "" }}'
         </span>
         <span class="fw-bold"> </span>
@@ -78,7 +78,8 @@
     <div v-show="this.$route.path === '/'" class="text-center my-3">
       <router-link
         to="/Live"
-        class="text-white text-decoration-none btn btn-secondary btn-sm rounded-0"
+        class="text-white text-decoration-none btn btn-secondary btn-sm rounded-pill px-3 border-0"
+        style="background-color: #ea3137"
         >More Live Now <i class="bi bi-arrow-right"></i
       ></router-link>
     </div>
