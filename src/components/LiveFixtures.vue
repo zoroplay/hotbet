@@ -58,17 +58,17 @@
       </div>
 
       <div class="d-flex" v-else>
-        <div class="bet">
+        <div class="bet text-center">
           <span class="event_odds">
             <i class="bi bi-lock text-white-50"></i>
           </span>
         </div>
-        <div class="bet">
+        <div class="bet text-center">
           <span class="event_odds">
             <i class="bi bi-lock text-white-50"></i>
           </span>
         </div>
-        <div class="bet">
+        <div class="bet text-center">
           <span class="event_odds">
             <i class="bi bi-lock text-white-50"></i>
           </span>

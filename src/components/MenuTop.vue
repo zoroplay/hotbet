@@ -1,5 +1,5 @@
 <template>
-    <div class="header">
+    <div class="header d-lg-none text-start position-absolute top-0 position-sticky w-100" style="z-index: 99999">
         <div class="d-lg-none mobile-head main py-3 bg-transparent">
             <div class="d-flex justify-content-between align-items-center bg-transaparent">
                 <div class="d-flex px-3">

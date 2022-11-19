@@ -1,7 +1,7 @@
 <template>
   <div id="app">
-    <div class="header">
       <menu-top :sports="sports" :tournaments="tournaments"></menu-top>
+    <div class="header" style="">
       <navbar :sports="sports" :tournaments="tournaments"></navbar>
     </div>
     <div class="view-wrapper">
@@ -69,6 +69,8 @@ export default {
   margin: 0;
   padding: 0;
   height: 100vh;
+  position: relative;
+  overflow-y: hidden;
 }
 
 .view-wrapper > .view-content > .row {
