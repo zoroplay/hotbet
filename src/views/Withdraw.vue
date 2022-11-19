@@ -67,50 +67,63 @@
             Enter your desired amount and your withdrawal will be processed as
             soon as possible.
           </p>
-          <form action="">
-            <div class="mb-3 text-start">
+          <div v-if="message != ''" class="alert alert-info alert-dismissible fade show" role="alert">
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            <strong>Success!</strong> {{ message }}.
+          </div>
+          
+          <div class="mb-3 text-start">
               <label for="" class="form-label">Amount</label>
               <input
-                type="text"
-                name=""
-                id=""
+                type="number"
+                v-model="withdrawViaShop.amount"
                 class="form-control rounded-0 text-white bg-transparent"
                 placeholder=""
                 aria-describedby="helpId"
               />
             </div>
-            <div class="">
-              <div class="row gx-2">
-                <button class="btn btn-secondary col-2 rounded-0">Clear</button>
-                <button class="btn btn-secondary col-2 rounded-0">+100</button>
-                <button class="btn btn-secondary col-2 rounded-0">+200</button>
-                <button class="btn btn-secondary col-2 rounded-0">+500</button>
-                <button class="btn btn-secondary col-2 rounded-0">+1000</button>
+            <div class="mb-3">
+              <div class="d-flex justify-content-between">
+                <button
+                  class="btn btn-secondary btn-sm w-20 rounded-0 me-2"
+                  @click.prevent="clearAmount"
+                >
+                  Clear
+                </button>
+                <button
+                  class="btn btn-secondary btn-sm w-20 rounded-0 me-2"
+                  @click.prevent="updateAmount(100)"
+                >
+                  +100
+                </button>
+                <button
+                  class="btn btn-secondary btn-sm w-20 rounded-0 me-2"
+                  @click.prevent="updateAmount(200)"
+                >
+                  +200
+                </button>
+                <button
+                  class="btn btn-secondary btn-sm w-20 rounded-0 me-2"
+                  @click.prevent="updateAmount(500)"
+                >
+                  +500
+                </button>
+                <button
+                  class="btn btn-secondary btn-sm w-20 rounded-0"
+                  @click.prevent="updateAmount(1000)"
+                >
+                  +1000
+                </button>
               </div>
             </div>
-            <!-- <div class="mb-3 text-start">
-                    <label for="" class="form-label">Bank Name</label>
-                    <select class="form-control form-select rounded-0 text-white bg-transparent" name="" id="">
-                        <option></option>
-                        <option></option>
-                        <option></option>
-                    </select>
-                  </div>
-                  <div class="mb-3 text-start">
-                    <label for="" class="form-label">Account Number</label>
-                    <input type="number" name="" id="" class="form-control rounded-0 text-white bg-transparent" placeholder="" aria-describedby="helpId">
-                  </div> -->
             <div class="col-12 mb-3 ">
               <button
-                class="btn bg-success disabled btn-block border-0 rounded-0 w-100 text-white"
+                @click.prevent="submitRequest"
+                class="btn bg-success btn-block border-0 rounded-0 w-100 text-white"
               >
-                WITHDRAW
+                MAKE WITHDRAWAL
               </button>
             </div>
-            <router-link to="/Login" class="text-dark "
-              >I have an account</router-link
-            >
-          </form>
         </div>
       </div>
     </div>
@@ -131,6 +144,7 @@ export default {
       },
       user: [],
       loading: false,
+      message: ''
     };
   },
   methods: {
@@ -138,6 +152,22 @@ export default {
       let user = await axios.get("/auth/details");
       this.user = user.data.user;
     },
+    submitRequest() {
+      this.loading = true
+      axios
+        .post("user/account/online/withdraw", this.withdrawViaShop)
+        .then((res) => {
+          this.withdrawViaShop.amount = 0;
+          this.message = res.data.message;
+          this.loading = false
+        });
+    },
+    updateAmount(value) {
+      this.withdrawViaShop.amount = parseInt(this.withdrawViaShop.amount) + parseInt(value)
+    },
+    clearAmount(){
+      this.withdrawViaShop.amount = 0;
+    }
   },
   mounted() {
     this.getUserDetails();
@@ -158,5 +188,8 @@ export default {
   font-size: 22px;
   margin-bottom: 0;
   font-weight: 800;
+}
+.w-20 {
+  width: 20% !important;
 }
 </style>
