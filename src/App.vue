@@ -1,6 +1,7 @@
 <template>
   <div id="app">
-    <div class="header">
+      <menu-top :sports="sports" :tournaments="tournaments"></menu-top>
+    <div class="header" style="">
       <navbar :sports="sports" :tournaments="tournaments"></navbar>
     </div>
     <div class="view-wrapper">
@@ -24,9 +25,10 @@ import Navbar from "./components/Navbar.vue";
 import LeftSide from "./components/LeftSide.vue";
 import RightSide from "./components/RightSide.vue";
 import BetslipFooter from './components/BetslipFooter.vue';
+import MenuTop from './components/MenuTop.vue';
 
 export default {
-  components: { Navbar, LeftSide, RightSide, BetslipFooter },
+  components: { Navbar, LeftSide, RightSide, BetslipFooter, MenuTop },
   name: "app",
   data() {
     return {
@@ -67,6 +69,8 @@ export default {
   margin: 0;
   padding: 0;
   height: 100vh;
+  position: relative;
+  overflow-y: hidden;
 }
 
 .view-wrapper > .view-content > .row {

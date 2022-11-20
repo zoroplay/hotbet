@@ -93,6 +93,7 @@ export default {
       let end = future.getFullYear() + "-" + (future.getMonth()+1)   + "-"  + future.getDate();
       return `sports/get-fixtures-by-date?date=${start}&end_date=${end}&sid=${sport_id}&channel=mobile&limit=15&page=${this.page}`;
     },
+
     isLoggedIn: function() {
         return this.$store.getters.isAuthenticated;
     },
@@ -112,7 +113,9 @@ export default {
         this.page = this.page + 1; // next page
         axios.get(this.url).then(resp => {
             if (resp.data.fixtures.data.length > 1) { // check if any left
-              resp.data.fixtures.data.forEach(item => this.fixtures.push(item)); // push it into the items array so we can display the data
+              resp.data.fixtures.data.forEach(
+                item => this.fixtures.push(item)
+              ); // push it into the items array so we can display the data
               $state.loaded();
             } else {
               $state.complete();
@@ -124,6 +127,11 @@ export default {
             this.error = err.message
           });
       }, 500);
+    },
+    filterEvents(duration){
+      if(duration == '1hr'){
+        filter((x) => x.sport_id == sport_id );
+      }
     }
   }, 
   created(){

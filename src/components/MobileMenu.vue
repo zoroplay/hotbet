@@ -9,8 +9,8 @@
   >
     <div class="py-2">
       <div class="left-content">
-        <div class="left-top py-2 px-3 border-bottom">
-          <div class="mb-1">
+        <div class="left-top py-2 px-3 d-flex  align-items-center border-bottom">
+          <div class="mb-1 w-100">
             <select class="form-select rounded-0" name="" id="">
               <option selected>Select one</option>
               <option value="" v-for="(sport, index) in sports" :key="index">{{
@@ -18,6 +18,7 @@
               }}</option>
             </select>
           </div>
+          <button v-b-toggle.sidebar-1 class="ms-3 btn btn-link text-decoration-none text-white p-0"><i class="bi bi-x-lg"></i></button>
         </div>
         <div class="left-middle">
           <ul class="list-group list-group-flush rounded-0 text-start">
@@ -147,9 +148,10 @@ export default {
     border-right: none !important;
 } */
 
-.b-sidebar.bg-light {
+.b-sidebar#sidebar-1.bg-light {
   background-color: #16202c !important;
-  width: 80% !important;
+  width: 100% !important;
+  padding-top: 67px;
 }
 .list-group .list-group-item {
   padding-top: 10px;

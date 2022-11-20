@@ -11,7 +11,7 @@
                     <p class="mb-0 fw-bolder">BETSLIP</p>
                     <div>
                         <span>Balance <b>{{ formatBalance(user.balance) }}</b></span>
-                        <button @click.prevent="close" class="btn pe-1 btn-link text-white text-decoration-none">
+                        <button v-b-toggle.betslip-menu class="btn pe-1 btn-link text-white text-decoration-none">
                             <i class="bi bi-x-lg"></i>
                         </button>
                     </div>
@@ -152,7 +152,7 @@
 </script>
 
 <style>
-    .b-sidebar.bg-light {
+    .b-sidebar#betslip-menu.bg-light {
         background-color: #16202c !important;
         width: 100% !important;
     }
