@@ -23,10 +23,10 @@
           </router-link>
         </div>
         <div class="col-3">
-          <router-link class="text-decoration-none text-white" to="/">
+          <router-link class="text-decoration-none text-white" to="/Casino">
             <div class="card page-headline">
               <div class="card-body px-2">
-                <i class="bi bi-calendar-event"></i> <br />
+                <i class="bi bi-suit-spade"></i> <br />
                 <small>Casino</small>
               </div>
             </div>

@@ -2,12 +2,17 @@
     <b-sidebar id="betslip-menu" sidebar-class="overflow-hidden" backdrop no-header shadow right>
         <div class="right-content">
             <div class="balance p-2 text-start page-headline">
-                <p v-if="!$store.state.auth.user" class="text-white">
-                    Not logged in -
-                    <router-link to="/Register" class="txt-primary">Join Now</router-link>
-                    or <router-link class="txt-primary" to="/Login">Log In</router-link>
-                </p>
-                <div class="text-white d-flex justify-content-between align-items-center" v-if="user">
+                <div v-if="!$store.state.auth.user" class="text-white d-flex justify-content-between align-items-center">
+                    <p class="mb-0 fw-bolder">BETSLIP</p>
+                    <div>
+                        <span class="me-1">
+                            <router-link to="/Register" class="text-white">Join Now</router-link>
+                            or <router-link class="text-white" to="/Login">Log In</router-link>
+                        </span>
+                        <button v-b-toggle.betslip-menu class="ms-3 btn btn-link text-decoration-none text-white p-0"><i class="bi bi-x-lg"></i></button>
+                    </div>
+                </div>
+                <div class="text-white d-flex justify-content-between align-items-center" v-else>
                     <p class="mb-0 fw-bolder">BETSLIP</p>
                     <div>
                         <span>Balance <b>{{ formatBalance(user.balance) }}</b></span>
