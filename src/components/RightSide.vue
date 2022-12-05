@@ -147,8 +147,22 @@
                     <span>Odds</span>
                     <span class="fw-bolder">{{ betslip.totalOdds }}</span>
                   </div>
-                  <div class="col-12">
-                    <button class="btn btn-sm w-100 rounded-0 btn-success">
+                  <div
+                    v-if="betslip.maxBonus > 0"
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <span>Bonus</span>
+                    <span class="fw-bolder">{{ betslip.maxBonus }}</span>
+                  </div>
+                  <div
+                    v-if="betslip.maxWin > 0"
+                    class="d-flex justify-content-between align-items-center"
+                  >
+                    <span>Pot. Winnings</span>
+                    <span class="fw-bolder">{{ betslip.maxWin }}</span>
+                  </div>
+                  <div class="col-12 pt-2">
+                    <button @click="placeBet($event)" class="btn btn-sm w-100 rounded-0 btn-success">
                       PLACE BET
                     </button>
                   </div>
@@ -204,7 +218,13 @@ export default {
         return name.replace(/[^a-z0-9+]+/gi, "-");
     },
     clearBetslip(){
-        this.$store.dispatch("clearBetslip");
+        this.$store.dispatch("clearBetslip");},
+    updateWinnings(e) {
+      const val = e.target.value;
+      this.$store.dispatch("updateWinnings", val);
+    },
+    placeBet(e){
+      this.$store.dispatch('placeBet', e,"bet", null)
     }
   }
 };

@@ -115,13 +115,21 @@ export const getSplitProps = async (couponData) => {
   return couponData;
 };
 
-
-export const checkIfHasLive = (selections) => {
-    let hasLive = false;
-    selections.forEach((item) => {
-        if(item.type === 'live'){
-            hasLive = true;
-        }
-    })
-    return hasLive;
+export const checkIfHasLive = selections => {
+  let hasLive = false;
+  selections.forEach(item => {
+    if (item.type === "live") {
+      hasLive = true;
+    }
+  });
+  return hasLive;
 };
+
+export const checkNoOfDraws = (selections) => {
+  let no_of_draws = 0;
+  selections.forEach(selection => {
+      if (selection.oddname === 'X')
+          no_of_draws++
+  })
+  return no_of_draws === selections.length && no_of_draws > 5;
+}

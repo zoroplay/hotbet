@@ -130,6 +130,12 @@ export default {
     height: calc(100vh - 73px);
   }
 }
+
+@media screen and (max-width: 360px) {
+  html, body, h1,h2, h3, h4,h5,h6,p,span{
+    font-size: 5vw !important;
+  }
+}
 .card-header.page_headline {
   background-color: #23313d;
   color: #fff;

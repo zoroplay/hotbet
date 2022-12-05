@@ -2,7 +2,7 @@
     <div class="header">
         <div class="main d-flex justify-content-between align-items-center px-3 py-3 bg-transparent" style="z-index: 99999;">
             <router-link to="/" class="navbar-brand">
-                <img src="@/assets/logo1.png" class="img-fluid" style="height: 30px" alt="" />
+                <img src="@/assets/logo1.png" class="img-fluid logo" alt="" />
             </router-link>
             <div class="input-group d-none w-30">
                 <input type="text" class="form-control border-0" placeholder="Recipient's username"
@@ -25,9 +25,11 @@
                     </ul>
                 </div>
             </div>
-            <div v-if="isLoggedIn" class="btn-group" role="group" aria-label="Basic example">
+            <div v-if="isLoggedIn" class="d-flex flex-row align-items-center" role="group" aria-label="Basic example">
                 <button type="button" class="btn btn-sm disabled border-0 bg-transparent text-white text-uppercase fw-bold">{{ formatBalance(user.balance) }}</button>
-                <router-link to="/Deposit" type="button" class="btn btn-success btn-sm text-uppercase fw-bold">DEPOSIT</router-link>
+                <router-link to="/Deposit">
+                    <button class="btn rounded-0 btn-success btn-sm fw-bold">DEPOSIT</button>
+                </router-link>
                 <div class="dropdown d-none d-lg-block">
                     <button type="button" class="btn bg-transparent dropdown-toggle text-white text-uppercase fw-bold" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-fill"></i> menu</button>
                     <ul class="dropdown-menu shadow rounded-0" aria-labelledby="dropdownMenuButton1">
@@ -79,6 +81,9 @@ export default {
 </script>
 
 <style>
+    .logo{
+        height: 30px !important;
+    }
     .w-30{
         width: 30% !important;
     }
@@ -97,5 +102,10 @@ export default {
     .dropdown-menu{
         width: 230px;
         border-radius: 0;
+    }
+    @media screen and (max-width: 360px) {
+        .logo{
+            height: 19px !important;
+        }
     }
 </style>
