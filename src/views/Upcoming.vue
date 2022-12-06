@@ -2,7 +2,7 @@
   <div class="center-body">
     <div class="center-content">
       <div class="top-image border-bottom">
-        <img src="@/assets/op.jpeg" class="img-fluid" alt="">
+        <img src="@/assets/banner.png" class="img-fluid" alt="">
       </div>
       <div class="center-game_list">
         <div class="card bg-transparent border-0 rounded-0 rounded-0">
@@ -22,7 +22,7 @@
       </div>
     <div class="card bg-transparent rounded-0 border-0 py-5 my-5" v-if="error">
         <h5>{{ error }}</h5>
-        <p>You had a connection issue. Please try again</p>
+        <p>You had a connection issue. Pleasae try again</p>
         <div class="col-md-6 mx-auto text-center">
             <button @click="reloadPage" class="btn btn-sm btn-secondary rounded-0">Reload Page</button>
         </div>

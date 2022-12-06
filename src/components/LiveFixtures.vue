@@ -46,9 +46,11 @@
         <live-odds
           v-for="(o, index) in sortFixture(fixture)[0].odds"
           :key="index"
+          :outcome="sortFixture(fixture)"
           :odds="o.odds"
-          :name="o.name"
+          :name="o.type"
           :status="o.active"
+          :fixture="fixture"
         ></live-odds>
         <div class="bets-markets">
           <a class="text-decoration-none"

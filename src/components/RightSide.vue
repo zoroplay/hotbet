@@ -210,7 +210,7 @@ export default {
   data() {
     return {
       user: this.$store.state.auth.user,
-      loadidng: false
+      loading: false
     };
   },
   computed: {
