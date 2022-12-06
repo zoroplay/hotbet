@@ -1,7 +1,7 @@
 <template>
   <!-- <div class="bets"> -->
-      <div class="bet">
-        <span class="event_selection" v-if="status == '1'">
+      <div class="bet" @click="addToBetslip">
+        <span class="event_selection text-uppercase" v-if="status == '1'">
           {{ name }}
         </span>
         <span class="event_odds" v-if="status == '1'">
@@ -15,8 +15,32 @@
 
 <script>
 export default {
-    name: "odds",
-    props: ['odds', 'name', 'status', "live"]
+    name: "live-odds",
+    props: ['odds', 'name', 'status', "fixture", "outcome"],
+    methods:{
+      createID(event_id, market_id, odd_name, odd_id) {
+      let oddname = String(odd_name).replace(/[^a-zA-Z0-9]/g, "_");
+      return event_id + "_" + market_id + "_" + oddname + "_" + odd_id;
+    },
+    addToBetslip() {
+      const data = {
+        fixture: this.fixture,
+        market_id: this.outcome[0].id,
+        market_name: this.outcome[0].name,
+        odds: this.odds,
+        odd_id: this.outcome.id,
+        odd_name: this.name,
+        ele_id: this.createID(
+          this.fixture.provider_id,
+          this.outcome[0].id,
+          this.outcome[0].name,
+          this.outcome[0].id
+        ),
+        fixture_type: this.fixture.fixture_type
+      };
+      this.$store.dispatch("addToCoupon", data);
+    }
+    }
 };
 </script>
 

@@ -5,9 +5,9 @@
     <div class="left-content">
       <div class="left-top py-2 px-3 border-bottom">
         <div class="mb-1">
-          <select class="form-select rounded-0" name="" id="">
+          <select @change="setActiveSport($event)" class="form-select rounded-0" name="" id="">
             <option selected>Select one</option>
-            <option value="" v-for="(sport, index) in sports" :key="index">{{
+            <option :value="sport.sport_id" v-for="(sport, index) in sports" :key="index">{{
               sport.name
             }}</option>
           </select>

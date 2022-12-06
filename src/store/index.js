@@ -8,6 +8,8 @@ import axios from "../services/api";
 
 Vue.use(Vuex);
 
+
+
 const vuexLocal = new VuexPersistence({
   storage: window.localStorage
 });
@@ -28,6 +30,9 @@ export default new Vuex.Store({
     setMenu(state, payload) {
       state.sports = payload;
     },
+    setActiveSport(state, payload){
+      state.sport_id = payload;
+    },
     setBonusList(state, payload) {
       state.SportsbookBonusList = payload;
     },
@@ -41,6 +46,9 @@ export default new Vuex.Store({
     },
     setCommitMenu({ commit }, value) {
       commit("setMenu", value);
+    },
+    setCommitActiveSport({ commit }, value) {
+      commit('setActiveSport', value);
     },
     setCommitSiteData({ commit }) {
       Promise.all([fetchBonusList(), fetchGlobalVars()]).then(res => {
