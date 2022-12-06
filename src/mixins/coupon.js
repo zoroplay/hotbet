@@ -132,3 +132,11 @@ export const checkIfHasLive = selections => {
   });
   return hasLive;
 };
+export const checkNoOfDraws = (selections) => {
+  let no_of_draws = 0;
+  selections.forEach(selection => {
+      if (selection.oddname === 'X')
+          no_of_draws++
+  })
+  return no_of_draws === selections.length && no_of_draws > 5;
+}

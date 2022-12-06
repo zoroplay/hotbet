@@ -17,12 +17,12 @@
         </div>
       </div>
     </div>
-    <div v-if="!fixtures.length" class="loading mt-5 text-center">
+    <div v-if="!fixtures.length && loading" class="loading mt-5 text-center">
         <img src="@/assets/loading.gif" style="height: 40px" alt="" srcset="">
       </div>
     <div class="card bg-transparent rounded-0 border-0 py-5 my-5" v-if="error">
         <h5>{{ error }}</h5>
-        <p>You had a connection issue. Pleasae try again</p>
+        <p>You had a connection issue. Please try again</p>
         <div class="col-md-6 mx-auto text-center">
             <button @click="reloadPage" class="btn btn-sm btn-secondary rounded-0">Reload Page</button>
         </div>

@@ -170,7 +170,7 @@
                     <span class="fw-bolder">{{ betslip.maxWin }}</span>
                   </div>
                   <div class="col-12 pt-2">
-                    <button class="btn btn-sm w-100 rounded-0 btn-success">
+                    <button @click="placeBet($event)" class="btn btn-sm w-100 rounded-0 btn-success">
                       PLACE BET
                     </button>
                   </div>
@@ -234,6 +234,15 @@ export default {
     updateWinnings(e) {
       const val = e.target.value;
       this.$store.dispatch("updateWinnings", val);
+    },
+    clearBetslip(){
+        this.$store.dispatch("clearBetslip");},
+    updateWinnings(e) {
+      const val = e.target.value;
+      this.$store.dispatch("updateWinnings", val);
+    },
+    placeBet(e){
+      this.$store.dispatch('placeBet', e,"bet", null)
     }
   }
 };

@@ -6,7 +6,7 @@
                     <div class="card-header rounded-0 text-start page_headline py-3">
                         <h1>Virtual Games</h1>
                     </div>
-                    <iframe src="https://virtual-games.virtustec.com/desktop-v4/default/?checkScroll=true&amp;containerId=xpressContainer&amp;language=en-GB&amp;hwId=24f6985e-b386-4aa8-9683-3632203fc361&amp;showLanguageSelector=false&amp;showOddFormatSelector=false&amp;showUserCredit=true&amp;showUserName=false&amp;showClock=true&amp;customLinks=" frameborder="0" scrolling="yes" allow="autoplay encrypted-media" style="display: block; height:100vh; width: 100%;"></iframe>                
+                    <iframe src="https://virtual-games.virtustec.com/mobile-v4/?v=2.7.7&amp;hwId=d2d9c72c-5416-491f-a40d-7be26e111cd0&amp;language=en_GB&amp;showHeader=true&amp;showHeaderCredit=true&amp;customLinks=" style="border: none; overflow: hidden; height: 100vh; width: 100%;" frameborder="0" scrolling="no" allowfullscreen=""></iframe>
                 </div>
             </div>
         </div>

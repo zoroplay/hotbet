@@ -6,7 +6,7 @@
                     <div class="card-header rounded-0 text-start page_headline py-3">
                         <h1>Casino Games</h1>
                     </div>
-                    <iframe title="casino" style="width: 100%; border: 0; height: 100vh;" src= "https://ui.io.co.ke/?cid=1&token=null" />
+                    <iframe title="casino" style="width: 100%; border: 0; height: 100vh;" :src="url" />
                 </div>
             </div>
         </div>
@@ -21,9 +21,14 @@
                 
             }
         },
-        methods: {
-            
-        },
+        computed:{
+            user(){
+                return this.$store.state.auth.user;
+            },
+            url(){
+                return `https://ui.io.co.ke/?cid=1&token=${this.user?.auth_code}-SBE`
+            }
+        }
     };
 </script>
 
