@@ -103,7 +103,7 @@
                           bet.event_name
                         }}</small> -->
                         <div class="d-flex justify-content-between">
-                          <span>{{ bet.market_name }} - {{ bet.oddname }}</span>
+                          <span class="text-uppercase">{{ bet.oddname }}</span>
                           <span>{{ bet.odds }}</span>
                         </div>
                         <router-link

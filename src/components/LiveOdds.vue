@@ -1,27 +1,44 @@
 <template>
   <!-- <div class="bets"> -->
-      <div class="bet" @click="addToBetslip">
-        <span class="event_selection text-uppercase" v-if="status == '1'">
-          {{ name }}
-        </span>
-        <span class="event_odds" v-if="status == '1'">
-          {{ odds }}
-        </span>
-        <span class="event_odds" v-if="status == '0'">
-          <i class="bi bi-lock text-white-50"></i>
-        </span>
-      </div>
+  <div
+    class="bet"
+    :class="
+      isSelected(
+        createID(
+          fixture.provider_id,
+          outcome[0].id,
+          name,
+          type
+        ),
+        betslip
+      )
+        ? 'selected'
+        : ''
+    "
+    @click="addToBetslip"
+  >
+    <span class="event_selection text-uppercase" v-if="status == '1'">
+      {{ name }}
+    </span>
+    <span class="event_odds" v-if="status == '1'">
+      {{ odds }}
+    </span>
+    <span class="event_odds" v-if="status == '0'">
+      <i class="bi bi-lock text-white-50"></i>
+    </span>
+  </div>
 </template>
 
 <script>
 export default {
-    name: "live-odds",
-    props: ['odds', 'name', 'status', "fixture", "outcome"],
-    methods:{
-      createID(event_id, market_id, odd_name, odd_id) {
-      let oddname = String(odd_name).replace(/[^a-zA-Z0-9]/g, "_");
-      return event_id + "_" + market_id + "_" + oddname + "_" + odd_id;
-    },
+  name: "live-odds",
+  props: ["odds","type", "name", "status", "fixture", "outcome"],
+  computed: {
+    betslip() {
+      return this.$store.state.coupon.betslip;
+    }
+  },
+  methods: {
     addToBetslip() {
       const data = {
         fixture: this.fixture,
@@ -33,19 +50,18 @@ export default {
         ele_id: this.createID(
           this.fixture.provider_id,
           this.outcome[0].id,
-          this.outcome[0].name,
-          this.outcome[0].id
+          this.name,
+          this.type
         ),
-        fixture_type: this.fixture.fixture_type
+        fixture_type: this.fixture.fixture_type,
       };
       this.$store.dispatch("addToCoupon", data);
-    }
-    }
+    },
+  },
 };
 </script>
 
 <style>
-
 .bets {
   display: -webkit-box;
   display: -webkit-flex;
@@ -96,5 +112,4 @@ export default {
   white-space: nowrap;
   padding: 10px;
 }
-
 </style>

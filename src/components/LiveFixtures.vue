@@ -49,6 +49,7 @@
           :outcome="sortFixture(fixture)"
           :odds="o.odds"
           :name="o.type"
+          :type="o.type"
           :status="o.active"
           :fixture="fixture"
         ></live-odds>

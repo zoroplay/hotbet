@@ -138,7 +138,7 @@ const actions = {
             couponData.wthTax = winnings.wthTax;
             couponData.grossWin = winnings.grossWin;
             // check if has live
-            couponData.hasLive = this.checkIfHasLive(couponData.selections);
+            couponData.hasLive = checkIfHasLive(couponData.selections);
             return commit("setCouponData", couponData);
           } else {
             return commit("clearBetslip");
