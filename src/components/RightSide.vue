@@ -63,10 +63,7 @@
                 <button class="btn bg-dark rounded-0 text-white">load</button>
               </div>
               <p>Betslip is empty</p>
-              <svg
-                class="svg-icon"
-                style="vertical-align: middle;"
-              >
+              <svg class="svg-icon" style="vertical-align: middle;">
                 <!---->
                 <use
                   xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -76,10 +73,18 @@
             </div>
             <div v-else>
               <div>
-                  <div class=" d-flex mb-3 justify-content-between align-items-center">
-                      <span class="text-underline btn btn-link text-white">Booking Code</span>
-                      <span class="text-underline btn btn-link text-white" @click.prevent="clearBetslip">Clear Betslip</span>
-                  </div>
+                <div
+                  class=" d-flex mb-3 justify-content-between align-items-center"
+                >
+                  <span class="text-underline btn btn-link text-white"
+                    >Booking Code</span
+                  >
+                  <span
+                    class="text-underline btn btn-link text-white"
+                    @click.prevent="clearBetslip"
+                    >Clear Betslip</span
+                  >
+                </div>
                 <div
                   v-for="(bet, index) in betslip.selections"
                   :key="index"
@@ -87,7 +92,10 @@
                 >
                   <div class="text-start card-body p-0">
                     <div class="d-flex align-items-center betslip-bet">
-                      <div class="delete_bet h-100 px-3 py-4">
+                      <div
+                        class="delete_bet h-100 px-3 py-4"
+                        @click="removeSelection(bet)"
+                      >
                         <i class="bi bi-x-lg"></i>
                       </div>
                       <div class="btslip-game px-3 w-100">
@@ -107,8 +115,8 @@
                                   ? 0
                                   : bet.provider_id,
                               name: toURL(bet.event_name),
-                              status: 'prematch',
-                            },
+                              status: 'prematch'
+                            }
                           }"
                           class="small text-white"
                           >{{ bet.event_name }}</router-link
@@ -133,8 +141,8 @@
                     <label class="fw-bolder" for="">Stake</label>
                     <input
                       type="number"
-                      name=""
-                      id=""
+                      @keyup="updateWinnings($event)"
+                      :value="betslip.totalStake"
                       class="form-control rounded-0 bg-transparent text-white"
                       placeholder=""
                       aria-describedby="helpId"
@@ -142,7 +150,7 @@
                     <small id="helpId" class="text-muted">Min stake is 1</small>
                   </div>
                   <div
-                    class="d-flex justify-content-between align-items-center py-2"
+                    class="d-flex justify-content-between align-items-center"
                   >
                     <span>Odds</span>
                     <span class="fw-bolder">{{ betslip.totalOdds }}</span>
@@ -202,20 +210,30 @@ export default {
   data() {
     return {
       user: this.$store.state.auth.user,
-      loadidng: false,
+      loadidng: false
     };
   },
   computed: {
     betslip() {
       return this.$store.state.coupon.betslip;
-    },
+    }
   },
   methods: {
-      toURL(name) {
-        if (name === undefined) {
-            return "-";
-        }
-        return name.replace(/[^a-z0-9+]+/gi, "-");
+    toURL(name) {
+      if (name === undefined) {
+        return "-";
+      }
+      return name.replace(/[^a-z0-9+]+/gi, "-");
+    },
+    removeSelection(selection) {
+      this.$store.dispatch("removeSelection", selection);
+    },
+    clearBetslip() {
+      this.$store.dispatch("clearBetslip");
+    },
+    updateWinnings(e) {
+      const val = e.target.value;
+      this.$store.dispatch("updateWinnings", val);
     },
     clearBetslip(){
         this.$store.dispatch("clearBetslip");},
