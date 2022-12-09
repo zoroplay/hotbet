@@ -17,6 +17,9 @@ Vue.component("infinite-loading", InfiniteLoading);
 Vue.use(moment);
 Vue.use(BootstrapVue);
 
+const eventBus = new Vue(); 
+Vue.prototype.eventBus = eventBus;
+
 Vue.mixin({
   methods: {
     formatDate(date) {
@@ -33,6 +36,9 @@ Vue.mixin({
       axios.get("sports/get-menu?period=all&start=null&end=null").then(res => {
         this.$store.dispatch("setCommitMenu", res.data.menu);
       });
+    },
+    setActiveSport(e){
+      this.$store.dispatch('setCommitActiveSport', e.target.value);
     },
     liveScore(score, team) {
       if (score) {
@@ -61,6 +67,11 @@ Vue.mixin({
       let oddname = String(odd_name).replace(/[^a-zA-Z0-9]/g, "_");
       return event_id + "_" + market_id + "_" + oddname + "_" + odd_id;
     }
+  },
+  created(){
+    eventBus.$on('change_sports', (id) => {
+      this.dispatch('setCommitActiveSport', id)
+    })
   }
 });
 

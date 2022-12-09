@@ -60,7 +60,7 @@
     </div>
     <div class="card bg-transparent rounded-0 border-0 py-5 my-5" v-if="error">
       <h5>{{ error }}</h5>
-      <p>You had a connection issue. Pleasae try again</p>
+      <p>You had a connection issue. Please try again</p>
       <div class="col-md-6 mx-auto text-center">
         <button @click="reloadPage" class="btn btn-sm btn-secondary rounded-0">
           Reload Page
@@ -91,7 +91,7 @@ export default {
       activePeriod: "All",
       live: this.$store.state.live,
       loading: false,
-      error: null
+      error: null,
     };
   },
   watch: {
@@ -100,22 +100,8 @@ export default {
       handler(to) {
         // react to route changes...
         document.title = "Capital Bet";
-      }
+      },
     },
-    activePeriod(newPeriod) {
-      switch (newPeriod) {
-        case "1hr":
-          break;
-        case "3hr":
-          break;
-        case "24hr":
-          break;
-        case "72hr":
-          break;
-        default:
-          break;
-      }
-    }
   },
   computed: {
     url() {
@@ -143,7 +129,7 @@ export default {
     },
     user: function() {
       return this.$store.state.auth.user;
-    }
+    },
   },
   methods: {
     async getHighlights() {
@@ -157,22 +143,29 @@ export default {
         this.page = this.page + 1; // next page
         axios
           .get(this.url)
-          .then(resp => {
+          .then((resp) => {
             if (resp.data.fixtures.data.length > 1) {
               // check if any left
-              resp.data.fixtures.data.forEach(item => this.fixtures.push(item)); // push it into the items array so we can display the data
+              resp.data.fixtures.data.forEach((item) =>
+                this.fixtures.push(item)
+              ); // push it into the items array so we can display the data
               $state.loaded();
             } else {
               $state.complete();
             }
           })
-          .catch(err => {
+          .catch((err) => {
             console.log(err);
             this.loading = false;
             this.error = err.message;
           });
       }, 500);
-    }
+    },
+    filterEvents(duration) {
+      if (duration == "1hr") {
+        filter((x) => x.sport_id == sport_id);
+      }
+    },
   },
   created() {
     this.getHighlights();
@@ -181,7 +174,7 @@ export default {
     console.log(this.$store.state.live);
     this.$store.dispatch("setCommitLive", false);
   },
-  beforeDestroy() {}
+  beforeDestroy() {},
 };
 </script>
 

@@ -75,7 +75,7 @@
             v-if="error"
           >
             <h5>{{ error }}</h5>
-            <p>You had a connection issue. Pleasae try again</p>
+            <p>You had a connection issue. Please try again</p>
             <div class="col-md-6 mx-auto text-center">
               <button
                 @click="reloadPage"

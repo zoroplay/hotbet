@@ -3,8 +3,11 @@ import {
   calculateWinnings,
   checkBetType,
   checkIfHasLive,
-  groupTournament
+  groupTournament,
+  checkNoOfDraws
 } from "../../mixins/coupon";
+import axios from "../../services/api";
+
 
 const state = {
   betPlaced: null,
@@ -135,7 +138,7 @@ const actions = {
             couponData.wthTax = winnings.wthTax;
             couponData.grossWin = winnings.grossWin;
             // check if has live
-            couponData.hasLive = this.checkIfHasLive(couponData.selections);
+            couponData.hasLive = checkIfHasLive(couponData.selections);
             return commit("setCouponData", couponData);
           } else {
             return commit("clearBetslip");
@@ -268,140 +271,142 @@ const actions = {
 
     commit("cancelBet", data);
   },
+  placeBet({commit, state, rootState}, e, type, giftCode) {
+    // let coupondata = { ...state.betslip };
+    const globalVars = { ...rootState.SportsbookGlobalVariable };
+    const bonusList = [...rootState.SportsbookBonusList];
 
-  // placeBet({commit, state, rootState}, e) {
-  //   commit("doLoading");
-  //       // console.log(e);
-  //       // set button ele
-  //       let ele = e.target;
-  //       // grab current state
-  //       const coupondata = {...state.coupon.betslip};
-  //       // add giftCode to coupondata
+    console.log(type)
+    
+    commit("doLoading");
+        let ele = e.target;
+        // grab current state
+        const coupondata = {...state.betslip};
+        // add giftCode to coupondata
 
-  //       if (coupondata.stake === 0){
-  //           commit("doLoading");
-  //           toast.error('Stake cannot be 0');
-  //           return;
-  //       }
+        if (coupondata.stake === 0){
+            // commit("doLoading");
+            // toast.error('Stake cannot be 0');
+            return;
+        }
 
-  //       if (coupondata.selections.length === 2 && coupondata.stake > 2000){
-  //         commit("doLoading");
-  //         toast.error('Maximum stake for 2 selections is N2,000');
-  //           return;
-  //       }
+        if (coupondata.selections.length === 2 && coupondata.stake > 2000){
+          // commit("doLoading");
+          toast.error('Maximum stake for 2 selections is N2,000');
+            return;
+        }
 
-  //       const hasMoreDraws = checkNoOfDraws(coupondata.selections);
+        const hasMoreDraws = checkNoOfDraws(coupondata.selections);
 
-  //       if (hasMoreDraws) {
-  //           toast.error(`You cannot play more than 5 draws in one ticket`);
-  //           return;
-  //       }
+        if (hasMoreDraws) {
+            toast.error(`You cannot play more than 5 draws in one ticket`);
+            return;
+        }
 
-  //       let url;
-  //       if (type === 'bet') {
-  //           url = `sports/place-bet?channel=website`;
-  //           // check if user has been self excluded
-  //           const {user} = {...state.auth};
+        let url;
+        if (type = 'bet') {
+            url = `sports/place-bet?channel=website`;
+            // check if user has been self excluded
+            // const {user} = {...state.auth};
 
-  //           if (user.settings?.self_exclusion_period) {
-  //               toast.error(`You have been temporary locked out for the next ${calculateExclusionPeriod(user.settings?.self_exclusion_period)} days due to your responsible gaming self exclusion settings.`)
-  //               return;
-  //           }
+            // if (user.settings?.self_exclusion_period) {
+            //     toast.error(`You have been temporary locked out for the next ${calculateExclusionPeriod(user.settings?.self_exclusion_period)} days due to your responsible gaming self exclusion settings.`)
+            //     return;
+            // }
+        } else {
+            url = '/sports/book-bet?channel=website'
+        }
+        ele.disabled = true;
+        const prevHTML = ele.innerHTML;
+        ele.innerHTML = '...';
 
-  //       } else {
-  //           url = '/sports/book-bet?channel=website'
-  //       }
-  //       ele.disabled = true;
-  //       const prevHTML = ele.innerHTML;
-  //       ele.innerHTML = '...';
+        axios.post(url, coupondata).then(res => {
+            ele.disabled = false;
+            // commit("doLoading");
+            ele.innerHTML = prevHTML;
 
-  //       Http.post(url, coupondata).then(res => {
-  //           ele.disabled = false;
-  //           commit("doLoading");
-  //           ele.innerHTML = prevHTML;
+            // if (res.success) {
+            //     if (type === 'bet') {
+            //         // update user balance
+            //         // dispatch({type: UPDATE_USER_BALANCE, payload: res.balance});
+            //         // update todays bet
+            //         // dispatch({type: SET_TODAYS_BET, payload: res.coupon});
+            //         // dispatch({type: CANCEL_BET});
+            //         // printTicket(res.coupon.betslip_id, 'bet')
+            //     } else {
+            //         ele.innerHTML = prevHTML;
+            //     }
+            //     return dispatch({type: SET_BET_PLACED, payload: res});
+            // } else if (res.message === 'auth_fail') {
+            //     return dispatch({type: SHOW_LOGIN_MODAL})
+            // } else if (res.error === 'odds_change') {
+            //     // let bets = this.$store.getters.bets;
+            //     _.each(coupondata.selection, function (value) {
+            //         _.each(res.events, function (item) {
+            //             if (value.provider_id === item.provider_id && value.odd_name === item.odd_name) {
+            //                 value.hasError = true;
+            //             }
+            //         });
+            //     });
+            //     toast.error('Attention! some odds have been changed');
 
-  //           if (res.success) {
-  //               if (type === 'bet') {
-  //                   // update user balance
-  //                   dispatch({type: UPDATE_USER_BALANCE, payload: res.balance});
-  //                   // update todays bet
-  //                   dispatch({type: SET_TODAYS_BET, payload: res.coupon});
-  //                   dispatch({type: CANCEL_BET});
-  //                   printTicket(res.coupon.betslip_id, 'bet')
-  //               } else {
-  //                   ele.innerHTML = prevHTML;
-  //               }
-  //               return dispatch({type: SET_BET_PLACED, payload: res});
-  //           } else if (res.message === 'auth_fail') {
-  //               return dispatch({type: SHOW_LOGIN_MODAL})
-  //           } else if (res.error === 'odds_change') {
-  //               // let bets = this.$store.getters.bets;
-  //               _.each(coupondata.selection, function (value) {
-  //                   _.each(res.events, function (item) {
-  //                       if (value.provider_id === item.provider_id && value.odd_name === item.odd_name) {
-  //                           value.hasError = true;
-  //                       }
-  //                   });
-  //               });
-  //               toast.error('Attention! some odds have been changed');
+            //     coupondata.errorMsg = 'Attention! some odds have been changed';
+            //     coupondata.hasError = true;
 
-  //               coupondata.errorMsg = 'Attention! some odds have been changed';
-  //               coupondata.hasError = true;
+            //     //update bets state in redux
+            //     return dispatch({type: SET_COUPON_DATA, payload: coupondata});
 
-  //               //update bets state in redux
-  //               return dispatch({type: SET_COUPON_DATA, payload: coupondata});
+            // } else if (res.error === 'events_started') {
+            //     _.each(coupondata.selections, (value) => {
+            //         _.each(res.events, (item) => {
+            //             if (value.event_id === item.event_id) {
+            //                 value.hasError = true
+            //             }
+            //         });
+            //     });
+            //     toast.error('Attention! Some events have started');
 
-  //           } else if (res.error === 'events_started') {
-  //               _.each(coupondata.selections, (value) => {
-  //                   _.each(res.events, (item) => {
-  //                       if (value.event_id === item.event_id) {
-  //                           value.hasError = true
-  //                       }
-  //                   });
-  //               });
-  //               toast.error('Attention! Some events have started');
+            //     coupondata.errorMsg = 'Attention! Some events have started';
+            //     coupondata.hasError = true;
+            //     coupondata.tournaments = groupTournament(coupondata.selections);
+            //     // coupondata.fixtures = groupSelections(coupondata.selections);
+            //     //update bets state in redux
+            //     commit("setCouponData", coupondata);
 
-  //               coupondata.errorMsg = 'Attention! Some events have started';
-  //               coupondata.hasError = true;
-  //               coupondata.tournaments = groupTournament(coupondata.selections);
-  //               // coupondata.fixtures = groupSelections(coupondata.selections);
-  //               //update bets state in redux
-  //               return dispatch({type: SET_COUPON_DATA, payload: coupondata});
+            // } else if (res.error === 'events_finished') {
+            //     _.each(coupondata.selections, (value) => {
+            //         _.each(res.events, (item) => {
+            //             if (value.event_id === item.event_id) {
+            //                 value.hasError = true
+            //             }
+            //         });
+            //     });
+            //     toast.error('Attention! Some events have ended. Remove them to continue.');
 
-  //           } else if (res.error === 'events_finished') {
-  //               _.each(coupondata.selections, (value) => {
-  //                   _.each(res.events, (item) => {
-  //                       if (value.event_id === item.event_id) {
-  //                           value.hasError = true
-  //                       }
-  //                   });
-  //               });
-  //               toast.error('Attention! Some events have ended. Remove them to continue.');
+            //     coupondata.errorMsg = 'Attention! Some events have ended. Remove them to continue.';
+            //     coupondata.hasError = true;
+            //     coupondata.tournaments = groupTournament(coupondata.selections);
+            //     // coupondata.fixtures = groupSelections(coupondata.selections)
+            //     // update bets state in redux
+            //     commit("setCouponData", coupondata);
 
-  //               coupondata.errorMsg = 'Attention! Some events have ended. Remove them to continue.';
-  //               coupondata.hasError = true;
-  //               coupondata.tournaments = groupTournament(coupondata.selections);
-  //               // coupondata.fixtures = groupSelections(coupondata.selections)
-  //               // update bets state in redux
-  //               return dispatch({type: SET_COUPON_DATA, payload: coupondata});
-
-  //           } else {
-  //               dispatch({type: LOADING});
+            // } else {
+            //   commit("setLoading");
             
-  //               toast.error(res.message || 'Something went wrong. We were unable to accept betslip.');
-  //           }
-  //       }).catch(err => {
-  //           dispatch({type: LOADING});
+            //   toast.error(res.message || 'Something went wrong. We were unable to accept betslip.');
+            // }
+        }).catch(err => {
+          commit("setLoading");
 
-  //           ele.disabled = false;
-  //           ele.innerHTML = prevHTML;
+            ele.disabled = false;
+            ele.innerHTML = prevHTML;
 
-  //           if(err.response.status === 401){
-  //               toast.error('Please login to place bets');
-  //           }
-  //           // console.log(err);
-  //       });
-  // }
+            if(err.response.status === 401){
+                toast.error('Please login to place bets');
+            }
+            // console.log(err);
+        });
+  }
 };
 
 const mutations = {

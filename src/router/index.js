@@ -12,7 +12,9 @@ import Casino from "../views/Casino";
 import Virtual from "../views/Virtual";
 
 import ChangePassword from "../views/ChangePassword";
-import Deposit from "../views/Deposit";
+import Deposit from "../views/Deposit/index";
+import DepositViaShop from "../views/Deposit/Via-Shop"
+import DepositViaMobileMoney from "../views/Deposit/MobileMoney"
 import Withdraw from "../views/Withdraw";
 import Transactions from "../views/Transactions";
 
@@ -89,6 +91,16 @@ const routes = [
     path: "/deposit",
     name: "deposit",
     component: Deposit,
+  },
+  {
+    path: "/deposit/shop",
+    name: "deposit-via-shop",
+    component: DepositViaShop,
+  },
+  {
+    path: "/deposit/mobile-money",
+    name: "deposit-via-mobile-money",
+    component: DepositViaMobileMoney,
   },
   {
     path: "/withdraw",

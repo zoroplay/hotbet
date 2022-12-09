@@ -2,7 +2,7 @@
   <div class="center-body">
     <div class="center-content">
       <div class="top-image border-bottom">
-        <img src="@/assets/op.jpeg" class="img-fluid" alt="">
+        <img src="@/assets/banner.png" class="img-fluid" alt="">
       </div>
       <div class="center-game_list">
         <div class="card bg-transparent border-0 rounded-0 rounded-0">
@@ -17,7 +17,7 @@
         </div>
       </div>
     </div>
-    <div v-if="!fixtures.length" class="loading mt-5 text-center">
+    <div v-if="!fixtures.length && loading" class="loading mt-5 text-center">
         <img src="@/assets/loading.gif" style="height: 40px" alt="" srcset="">
       </div>
     <div class="card bg-transparent rounded-0 border-0 py-5 my-5" v-if="error">
