@@ -1,23 +1,30 @@
 import Vue from "vue";
+import { BootstrapVue } from "bootstrap-vue";
+import "bootstrap";
+import Toast, { POSITION } from "vue-toastification";
+
 import App from "./App.vue";
 import "./registerServiceWorker";
 import router from "./router";
 import store from "./store";
+
+
 import "bootstrap/dist/css/bootstrap.min.css";
-import { BootstrapVue } from "bootstrap-vue";
-import "bootstrap";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap-vue/dist/bootstrap-vue.css";
+import "vue-toastification/dist/index.css";
+
 import moment from "moment";
 import axios from "@/services/api";
 
 import InfiniteLoading from "vue-infinite-loading";
+
 Vue.component("infinite-loading", InfiniteLoading);
 
 Vue.use(moment);
 Vue.use(BootstrapVue);
-
-const eventBus = new Vue(); 
+Vue.use(Toast, { position: POSITION.TOP_CENTER });
+const eventBus = new Vue();
 Vue.prototype.eventBus = eventBus;
 
 Vue.mixin({
@@ -29,6 +36,14 @@ Vue.mixin({
       const n = number ? number : 0;
       return "KSH " + parseFloat(n).toLocaleString();
     },
+    formatNumber(number) {
+      return !number
+        ? 0
+        : parseFloat(number).toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+          });
+    },
     reloadPage() {
       window.location.reload();
     },
@@ -37,8 +52,8 @@ Vue.mixin({
         this.$store.dispatch("setCommitMenu", res.data.menu);
       });
     },
-    setActiveSport(e){
-      this.$store.dispatch('setCommitActiveSport', e.target.value);
+    setActiveSport(e) {
+      this.$store.dispatch("setCommitActiveSport", e.target.value);
     },
     liveScore(score, team) {
       if (score) {
@@ -52,7 +67,7 @@ Vue.mixin({
     },
     isSelected(ele_id, coupon) {
       let isExist = false;
-    
+
       if (coupon.selections.length > 0) {
         let count = coupon.selections.find(
           selection => selection.element_id === ele_id
@@ -68,10 +83,10 @@ Vue.mixin({
       return event_id + "_" + market_id + "_" + oddname + "_" + odd_id;
     }
   },
-  created(){
-    eventBus.$on('change_sports', (id) => {
-      this.dispatch('setCommitActiveSport', id)
-    })
+  created() {
+    eventBus.$on("change_sports", id => {
+      this.dispatch("setCommitActiveSport", id);
+    });
   }
 });
 

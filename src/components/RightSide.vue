@@ -235,12 +235,6 @@ export default {
       const val = e.target.value;
       this.$store.dispatch("updateWinnings", val);
     },
-    clearBetslip(){
-        this.$store.dispatch("clearBetslip");},
-    updateWinnings(e) {
-      const val = e.target.value;
-      this.$store.dispatch("updateWinnings", val);
-    },
     placeBet(e){
       this.$store.dispatch('placeBet', e,"bet", null)
     }

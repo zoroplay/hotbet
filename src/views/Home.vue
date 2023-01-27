@@ -31,7 +31,7 @@
           :key="index"
           class="btn rounded-0 btn-outline-secondary btn-sm me-2 rounded-pill px-4"
           :class="activePeriod === period ? 'active' : ''"
-          @click="activePeriod = period"
+          @click="changePeriod(period)"
         >
           {{ period }}
         </button>
@@ -47,6 +47,12 @@
             v-if="!loading && fixtures.length"
             :predictions="predictions"
           />
+          <div
+            v-if="!loading && !fixtures.length"
+            class="loading mt-5 text-center"
+          >
+            <p>There are no fixtures for the selected period. Check back later</p>
+          </div>
           <infinite-loading
             v-if="fixtures.length"
             spinner="spiral"
@@ -71,6 +77,7 @@
 </template>
 
 <script>
+import moment from "moment";
 import Fixtures from "../components/Fixtures.vue";
 // @ is an alias to /src
 // import HelloWorld from "@/components/HelloWorld.vue";
@@ -89,9 +96,11 @@ export default {
       tournaments: [],
       periods: ["All", "1hr", "3hr", "24hr", "72hr"],
       activePeriod: "All",
+      startDate: moment().format('YYYY-MM-DD HH:mm'),
+      endDate: moment().add(7, 'days').format('YYYY-MM-DD HH:mm'),
       live: this.$store.state.live,
       loading: false,
-      error: null,
+      error: null
     };
   },
   watch: {
@@ -99,31 +108,15 @@ export default {
       immediate: true,
       handler(to) {
         // react to route changes...
-        document.title = "Capital Bet";
+        document.title = "HotBet";
       },
     },
   },
   computed: {
     url() {
-      let today = new Date();
-      let future = new Date();
       let sport_id = this.$store.state.sport_id;
-      future.setDate(today.getDate() + 7);
-      let start =
-        today.getFullYear() +
-        "-" +
-        (today.getMonth() + 1) +
-        "-" +
-        today.getDate();
-      let end =
-        future.getFullYear() +
-        "-" +
-        (future.getMonth() + 1) +
-        "-" +
-        future.getDate();
-      return `sports/get-fixtures-by-date?date=${start}&end_date=${end}&sid=${sport_id}&channel=mobile&limit=15&page=${this.page}`;
+      return `sports/get-fixtures-by-date?date=${this.startDate}&end_date=${this.endDate}&sid=${sport_id}&channel=mobile&limit=15&page=${this.page}`;
     },
-
     isLoggedIn: function() {
       return this.$store.getters.isAuthenticated;
     },
@@ -136,7 +129,6 @@ export default {
       const resp = await axios.get(this.url);
       this.fixtures = resp.data.fixtures.data;
       this.predictions = resp.data.predictions;
-      // console.log(this.fixtures)
     },
     infiniteScroll($state) {
       setTimeout(() => {
@@ -166,6 +158,27 @@ export default {
         filter((x) => x.sport_id == sport_id);
       }
     },
+    changePeriod (period) {
+      this.activePeriod = period;
+      switch (period) {
+        case '1hr':
+          this.endDate = moment(this.startDate).add(1, 'hour').format('YYYY-MM-DD HH:mm')
+          break;
+        case '3hr':
+          this.endDate = moment(this.startDate).add(3, 'hours').format('YYYY-MM-DD HH:mm')
+          break;
+        case '24hr':
+          this.endDate = moment(this.startDate).add(24, 'hours').format('YYYY-MM-DD HH:mm')
+          break;
+        case '72hr':
+          this.endDate = moment(this.startDate).add(72, 'hours').format('YYYY-MM-DD HH:mm')
+          break;
+        default:
+          this.endDate = moment(this.startDate).add(7, 'days').format('YYYY-MM-DD HH:mm')
+          break;
+      }
+      this.getHighlights();
+    }
   },
   created() {
     this.getHighlights();

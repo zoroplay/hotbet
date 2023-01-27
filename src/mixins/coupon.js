@@ -48,7 +48,6 @@ export const calculateWinnings = (couponData, globalVars, bonusList) => {
   if (couponData.stake > 0)
     maxWin = parseFloat(couponData.totalOdds) * parseFloat(couponData.stake);
 
-  console.log(maxWin);
   //calculate bonus
   if (maxWin > 0) {
     maxBonus = calculateBonus(maxWin, couponData, globalVars, bonusList);
@@ -59,7 +58,7 @@ export const calculateWinnings = (couponData, globalVars, bonusList) => {
     //   ((total - couponData.stake) * process.env.REACT_APP_WTH_PERC) / 100;
   }
   return {
-    maxWin: parseFloat(total - wthTax).toFixed(2),
+    maxWin: total - wthTax,
     grossWin: total,
     maxBonus: maxBonus,
     wthTax

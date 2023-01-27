@@ -181,30 +181,34 @@
                       placeholder=""
                       aria-describedby="helpId"
                     />
-                    <small id="helpId" class="text-muted">Min stake is 1</small>
+                    <small id="helpId" class="text-muted">Min stake is 100</small>
                   </div>
                   <div
-                    class="d-flex text-white-50 justify-content-between align-items-center py-2"
+                    class="d-flex text-white justify-content-between align-items-center"
                   >
                     <span>Odds</span>
                     <span class="fw-bolder">{{ betslip.totalOdds }}</span>
                   </div>
                   <div
                     v-if="betslip.maxBonus > 0"
-                    class="d-flex justify-content-between align-items-center"
+                    class="d-flex text-white justify-content-between align-items-center"
                   >
                     <span>Bonus</span>
-                    <span class="fw-bolder">{{ betslip.maxBonus }}</span>
+                    <span class="fw-bolder">{{
+                      formatNumber(betslip.maxBonus)
+                    }}</span>
                   </div>
                   <div
                     v-if="betslip.maxWin > 0"
-                    class="d-flex justify-content-between align-items-center"
+                    class="d-flex text-white justify-content-between align-items-center"
                   >
                     <span>Pot. Winnings</span>
-                    <span class="fw-bolder">{{ betslip.maxWin }}</span>
+                    <span class="fw-bolder">{{
+                      formatNumber(betslip.maxWin)
+                    }}</span>
                   </div>
-                  <div class="col-12">
-                    <button class="btn btn-sm w-100 rounded-0 btn-success">
+                  <div class="col-12 py-2">
+                    <button class="btn btn-sm w-100 rounded-0 btn-success" @click="placeBet">
                       PLACE BET
                     </button>
                   </div>
@@ -245,13 +249,13 @@ export default {
   data() {
     return {
       user: this.$store.state.auth.user,
-      loading: false,
+      loading: false
     };
   },
   computed: {
     betslip() {
       return this.$store.state.coupon.betslip;
-    },
+    }
   },
   methods: {
     toURL(name) {
@@ -270,9 +274,8 @@ export default {
       const val = e.target.value;
       this.$store.dispatch("updateWinnings", val);
     },
-    close() {},
     placeBet(e){
-      this.$store.dispatch('placeBet', e,"bet", null)
+      this.$store.dispatch('placeBet', {e, type: "bet"})
     }
   },
   //   props: ,

@@ -29,16 +29,16 @@ const routes = [
     component: Home,
     meta: {
       title:
-        "Capital Bet",
+        "HotBet",
       metaTags: [
         {
           name: "title",
           content:
-            "Capital Bet",
+            "HotBet",
         },
         {
           property: "og:url",
-          content: "capitalbet.ug",
+          content: "hotbet.co.ug",
         },
         {
           property: "og:type",

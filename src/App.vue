@@ -73,6 +73,11 @@ export default {
   overflow-y: hidden;
 }
 
+.Vue-Toastification__toast {
+  min-height: auto !important;
+  padding: 10px 24px !important;
+}
+
 .view-wrapper > .view-content > .row {
   overflow: hidden;
   height: calc(100vh - 73px);
