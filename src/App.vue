@@ -1,9 +1,7 @@
 <template>
   <div id="app">
-      <menu-top :sports="sports" :tournaments="tournaments"></menu-top>
-    <div class="header" style="">
-      <navbar :sports="sports" :tournaments="tournaments"></navbar>
-    </div>
+    <menu-top :sports="sports" :tournaments="tournaments"></menu-top>
+    <navbar :sports="sports" :tournaments="tournaments"></navbar>
     <div class="view-wrapper">
       <div class="view-content">
         <div class="row position-relative">
@@ -64,13 +62,38 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #fff;
-  background-color: #16202c;
+  background-color: #082b5b;
   overflow-x: hidden;
   margin: 0;
   padding: 0;
   height: 100vh;
   position: relative;
   overflow-y: hidden;
+  .header {
+    background: #0E1E35;
+    flex-wrap: nowrap;
+    border-bottom: 1px solid #095387;
+    margin-bottom: 5px;
+  }
+  .list-group {
+    .list-group-item {
+      background: #0e1e35;
+      border-bottom: 1px solid #0e1e35;
+      border-top: 1px solid #0f5298;
+    }
+  }
+  .accordion-header {
+    .accordion-button {
+      background: #095387;
+      background-image: linear-gradient(to bottom, #095387 3%,#030f1f 4%, #082b5b 5%, #042361 50%, #082b5b 95%,#030f1f 96%, #008822 97%);
+      border-bottom: 2px solid #050F1F;
+    }
+  }
+  .btn-success {
+    background: #037c1f;
+    color: #f0f0f0;
+    border-color: #71931c;
+  }
 }
 
 .Vue-Toastification__toast {

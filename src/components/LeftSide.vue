@@ -55,7 +55,7 @@
               aria-labelledby="flush-headingOne"
               data-bs-parent="#accordionFlushExample"
             >
-              <div class="accordion-body px-1">
+              <div class="accordion-body p-0">
                 <ul class="list-group list-group-flush rounded-0 text-start">
                   <li
                     v-for="(tournament, index) in tournaments"
@@ -87,7 +87,7 @@
               aria-labelledby="flush-headingTwo"
               data-bs-parent="#accordionFlushExample"
             >
-              <div class="accordion-body">
+              <div class="accordion-body p-0">
                 <ul class="list-group list-group-flush rounded-0 text-start">
                   <li
                     v-for="(sport, index) in sports[0].categories"
