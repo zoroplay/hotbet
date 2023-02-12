@@ -62,7 +62,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #fff;
-  background-color: #082b5b;
+  background-color: #111;
   overflow-x: hidden;
   margin: 0;
   padding: 0;
